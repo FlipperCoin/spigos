@@ -1,5 +1,8 @@
 [org 0x7c00]
 
+mov bp, 0x8000
+mov sp, bp
+
 mov ah, 0x0e    ; scrolling teletype BIOS routine
 
 mov cx, 0
