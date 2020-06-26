@@ -14,3 +14,11 @@ then
 fi
 
 cp -r $OUT_DIR/* $WIN_OUT_DIR
+
+cpErrorCode=$?
+
+if [ $cpErrorCode -eq 0 ]; then
+    echo "Finished sync succesfully"
+else
+    echo "Sync failed with error code $cpErrorCode"
+fi
