@@ -1,8 +1,9 @@
+[org 0x7c00]
+
 mov ah, 0x0e    ; scrolling teletype BIOS routine
 
 mov cx, 0
 mov bx, hello
-add bx, 0x7c00
 print_hello:
     mov al, [bx]
     int 0x10
