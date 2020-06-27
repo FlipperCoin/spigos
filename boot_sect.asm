@@ -15,6 +15,8 @@ int 0x10
 
 mov ax, hello
 call print
+mov dx, 0x12AB
+call print_hex
 
 jmp $
 
