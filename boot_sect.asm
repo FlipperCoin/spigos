@@ -1,10 +1,10 @@
-[org 0x7c00]
-
 ;
-; Initialize the stack
+; Initialize data and stack segment
 ;
-mov bp, 0x8000
-mov sp, bp
+mov bx, 0x7c0
+mov ds, bx
+mov bx, 0x800
+mov ss, bx
 
 ;
 ; Clear screen
