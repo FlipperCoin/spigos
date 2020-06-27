@@ -2,7 +2,6 @@ print:
     pusha
     mov bx, ax ; string pointer
     mov ah, 0x0E ; Write TTY
-
 print_loop:
     mov al, [bx]
     cmp al, 0
@@ -10,8 +9,15 @@ print_loop:
     int 0x10
     inc bx
     jmp print_loop
-
 print_exit:
+    popa
+    ret
+
+println:
+    pusha
+    call print
+    mov ax, NEW_LINE
+    call print
     popa
     ret
 
@@ -23,8 +29,8 @@ print_hex:
     ret
 
 format_hex:
-    push ebp
-    mov ebp, esp
+    push bp
+    mov bp, sp
     push dx
 
     mov cx, dx
@@ -48,9 +54,11 @@ format_hex_commit:
 
     mov ax, HEX_OUT
     pop dx
-    pop ebp
+    pop bp
     ret
     
+NEW_LINE:
+    db 0x0d,0x0a,0
 
 HEX_OUT:
     db '0x0000',0
