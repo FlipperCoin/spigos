@@ -8,17 +8,18 @@ read_drive:
     push bp
     mov bp, sp
 
-    mov bl, al
+    push ax ; Save sectors to read
 
-    mov ah, 2
-    mov cl, 2
-    mov ch, 0
-    mov dh, 0
+    mov ah, 2 ; Read sectors from drive function table index
+    mov cl, 2 ; Second sector
+    mov ch, 0 ; First cylinder
+    mov dh, 0 ; First head
 
     int 0x13
     jc read_drive_general_error
     
-    cmp bl, al
+    pop bx
+    cmp bl, al ; Read same number of requested sectors
     jne read_drive_partial_read_error
 
     jmp read_drive_return

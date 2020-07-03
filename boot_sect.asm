@@ -23,16 +23,16 @@ mov ax, BOOT_WELCOME
 call println
 
 mov bx, 0x9000
-mov al, 1
+mov al, 2
 mov dl, [BOOT_DRIVE]
 call read_drive
 
-mov dx, [0x9000]
+mov dx, [es:0x9000]
 call print_hex
 mov ax, EMPTY_STRING
 call println
 
-mov dx, [0x9100]
+mov dx, [es:0x9200]
 call print_hex
 mov ax, EMPTY_STRING
 call println
@@ -54,5 +54,5 @@ times 510-($-$$) db 0
 
 dw 0xAA55
 
-times 256 db 0xFA, 0xCE
-times 256 db 0xBE, 0xEF
+times 256 dw 0xFACE
+times 256 dw 0xBEEF

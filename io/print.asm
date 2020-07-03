@@ -1,4 +1,4 @@
-%include "hex.asm"
+%include "format_hex.asm"
 
 print:
     pusha
