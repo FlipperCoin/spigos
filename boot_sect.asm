@@ -10,6 +10,8 @@ mov ds, bx
 mov bp, 0x8000
 mov sp, bp
 
+mov [BOOT_DRIVE], dl
+
 ;
 ; Clear screen
 ;
@@ -20,12 +22,30 @@ int 0x10
 mov ax, BOOT_WELCOME
 call println
 
+mov bx, 0x9000
+mov al, 1
+mov dl, [BOOT_DRIVE]
+call read_drive
+
+mov dx, [0x9000]
+call print_hex
+mov ax, EMPTY_STRING
+call println
+
+mov dx, [0x9100]
+call print_hex
+mov ax, EMPTY_STRING
+call println
+
 jmp $
 
 %include "io.asm"
 
 BOOT_WELCOME:
     db 'Hello, Bootloader!',0
+
+BOOT_DRIVE:
+    db 0
 
 EMPTY_STRING:
     db 0
