@@ -17,27 +17,22 @@ mov ah, 0x00
 mov al, 0x03 ; text mode 80x25 16 colours
 int 0x10
 
-mov ax, HELLO
-call println
-mov dx, 0x12AB
-call print_hex
-push 0
-mov ax, sp
-call println
-push sp
-mov dx, sp
-call print_hex
-push 0
-mov ax, sp
+mov ax, BOOT_WELCOME
 call println
 
 jmp $
 
 %include "io.asm"
 
-HELLO:
+BOOT_WELCOME:
     db 'Hello, Bootloader!',0
+
+EMPTY_STRING:
+    db 0
 
 times 510-($-$$) db 0
 
 dw 0xAA55
+
+times 256 db 0xFA, 0xCE
+times 256 db 0xBE, 0xEF
