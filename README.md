@@ -10,7 +10,7 @@ Do the following:
     ```bash
     sudo apt install nasm
     ```
-3.  Install virtualization software for an x86_64 architecture.  
+3. Install virtualization software for an x86_64 architecture.  
     I used QEMU but in theory you can use other virtualization software if BIOS will have the same behaviour.  
     On Debian based:
     ```bash
