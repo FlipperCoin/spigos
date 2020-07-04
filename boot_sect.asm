@@ -1,40 +1,27 @@
-;
-; Init data segment
-;
-mov bx, 0x7c0
-mov ds, bx
+[org 0x7c00]
+real_mode:
+    mov bp, 0x9000      ; set the stack
+    mov sp, bp
 
-;
-; Init stack
-;
-mov bp, 0x8000
-mov sp, bp
+    mov ah, 0x00        ; clear screen
+    mov al, 0x03        ; text mode 80x25 16 colours
+    int 0x10
 
-mov [BOOT_DRIVE], dl
+    call switch_to_pm
 
-;
-; Clear screen
-;
-mov ah, 0x00
-mov al, 0x03 ; text mode 80x25 16 colours
-int 0x10
-
-mov ax, BOOT_WELCOME
-call print
-
-jmp $
-
+%include "switch_to_pm.asm"
 %include "io.asm"
+
+[bits 32]
+boot_main:
+    mov eax, BOOT_WELCOME
+    call print
+
+    jmp $
 
 BOOT_WELCOME:
     db 'Hello, Bootloader!',0
 
-BOOT_DRIVE:
-    db 0
-
-EMPTY_STRING:
-    db 0
-
+; bootsector padding
 times 510-($-$$) db 0
-
 dw 0xAA55
