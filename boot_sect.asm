@@ -20,22 +20,7 @@ mov al, 0x03 ; text mode 80x25 16 colours
 int 0x10
 
 mov ax, BOOT_WELCOME
-call println
-
-mov bx, 0x9000
-mov al, 2
-mov dl, [BOOT_DRIVE]
-call read_drive
-
-mov dx, [es:0x9000]
-call print_hex
-mov ax, EMPTY_STRING
-call println
-
-mov dx, [es:0x9200]
-call print_hex
-mov ax, EMPTY_STRING
-call println
+call print
 
 jmp $
 
@@ -53,6 +38,3 @@ EMPTY_STRING:
 times 510-($-$$) db 0
 
 dw 0xAA55
-
-times 256 dw 0xFACE
-times 256 dw 0xBEEF
