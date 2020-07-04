@@ -9,12 +9,11 @@ print:
     pusha
     mov ebx, eax ; string pointer
     mov edx, VIDEO_MEMORY
-    mov dl, WHITE_ON_BLACK
+    mov ah, WHITE_ON_BLACK
 print_loop:
-    mov dh, [ebx]
-    cmp dh, 0
+    mov al, [ebx]
+    cmp al, 0
     je print_exit
-    mov bx, cx
     mov [edx], ax
     inc ebx
     add edx, 2
