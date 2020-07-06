@@ -52,6 +52,8 @@ read_drive_return:
     pop bp
     ret
 
+EMPTY_STRING:
+    db 0
 
 READ_DRIVE_GENERAL_ERROR:
     db "Failed to read from drive! Error code: ", 0
