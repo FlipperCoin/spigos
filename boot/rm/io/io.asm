@@ -1,2 +1,2 @@
-%include "print.asm"
-%include "read_drive.asm"
+%include "rm/io/print.asm"
+%include "rm/io/read_drive.asm"

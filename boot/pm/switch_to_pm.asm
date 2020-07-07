@@ -24,4 +24,4 @@ protected_mode:
 
     call boot_main
 
-%include "gdt.asm"
+%include "pm/gdt.asm"

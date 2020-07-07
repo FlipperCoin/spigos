@@ -1,3 +1,4 @@
+[bits 16]
 format_hex:
     push bp
     mov bp, sp

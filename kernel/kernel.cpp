@@ -1,6 +1,6 @@
 #include "print.cpp"
 
-int KernelMain() {
+extern "C" int KernelMain() {
     print("Hello Kernel!");
 
     return 0;

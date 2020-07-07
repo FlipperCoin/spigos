@@ -1,5 +1,5 @@
-%include "format_hex.asm"
-
+%include "rm/io/format_hex.asm"
+[bits 16]
 print:
     pusha
     mov bx, ax ; string pointer
@@ -11,6 +11,7 @@ print_loop:
     int 0x10
     inc bx
     jmp print_loop
+    jmp print_exit
 print_exit:
     popa
     ret

@@ -1,3 +1,4 @@
+[bits 16]
 ;
 ; Read sectors from given drive, starting from the second sector of the first track of the first cylinder
 ;
@@ -56,7 +57,7 @@ EMPTY_STRING:
     db 0
 
 READ_DRIVE_GENERAL_ERROR:
-    db "Failed to read from drive! Error code: ", 0
+    db "Failed read drive code ", 0
 
 READ_DRIVE_PARTIAL_READ_ERROR:
-    db "Failed to read all sectors requested! Actual number of sectors read: ", 0
+    db "Failed read sectors number read ", 0
