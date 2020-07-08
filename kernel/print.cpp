@@ -1,7 +1,14 @@
-char* VIDEO_MEM = (char*)0xb8000;
+short* const VIDEO_MEM = (short*)0xb8000;
 
 void print(const char* s) {
-    while (char c = *(s++) != '\0') {
-        *(VIDEO_MEM++) = c;
+    short whiteOnBlack = 0x0f00;
+    short* videoBuffer = VIDEO_MEM;
+    for (; *s != '\0'; s++) {
+        short c = whiteOnBlack + (*s);
+        *videoBuffer = c;
+        videoBuffer++;
     }
+    // while (char c = *(s++) != '\0') {
+    //     *(videoBuffer++) = c;
+    // }
 }
