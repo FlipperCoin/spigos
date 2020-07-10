@@ -5,22 +5,19 @@ OUT ?= out
 build: $(OUT)/spigos_img
 
 clean:
-	rm -r $(OUT)
+	$(MAKE) -C boot clean
+	$(MAKE) -C kernel clean
+	if [ -d $(OUT) ]; then rm -r $(OUT); fi
 
 $(OUT):
-	mkdir -p $@/obj
+	mkdir -p $@
 
-$(OUT)/spigos_img: $(OUT)/boot_sect.bin $(OUT)/kernel.bin
+$(OUT)/spigos_img: boot/out/boot_sect.bin kernel/out/kernel.bin | $(OUT)
 	cat $^ > $@
 
-$(OUT)/boot_sect.bin: boot/boot_sect.asm boot/*.asm | $(OUT)
-	cd boot && nasm boot_sect.asm -f bin -o ../$@
+boot/out/boot_sect.bin:
+	$(MAKE) -C boot
 
-$(OUT)/kernel.bin: $(OUT)/obj/kenrel_entry.o $(OUT)/obj/kernel.o 
-	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
+kernel/out/kernel.bin: 
+	$(MAKE) -C kernel
 
-$(OUT)/obj/kenrel_entry.o: kernel/kernel_entry.asm | $(OUT)
-	nasm $< -f elf -o $@
-
-$(OUT)/obj/kernel.o: kernel/kernel.cpp | $(OUT)
-	g++ -o $@ -m32 -ffreestanding -c -fno-pie $<
