@@ -1,14 +1,12 @@
-OUT = out
-
 .PHONY: build clean
 
-build: $(OUT)/boot_sect.bin
+build: out/boot_sect.bin
 
 clean:
-	if [ -d $(OUT) ]; then rm -r $(OUT); fi
+	if [ -d out ]; then rm -r out; fi
 
-$(OUT):
+out:
 	mkdir -p $@
 
-$(OUT)/boot_sect.bin: *.asm | $(OUT)
+out/boot_sect.bin: *.asm | out
 	nasm boot_sect.asm -f bin -o $@

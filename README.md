@@ -10,21 +10,21 @@ Do the following:
     ```bash
     sudo apt install nasm
     ```
-3. Install virtualization software for an x86_64 architecture.  
-    I used QEMU but in theory you can use other virtualization software if BIOS will have the same behaviour.  
+3. Install virtualization software for an x86 architecture.  
+    I used QEMU but you can use other virtualization software.  
     On Debian based:
     ```bash
     sudo apt install qemu
     ```  
     On Windows (64 bit) download & install [here](https://qemu.weilnetz.de/w64).
 
-## Running
+## Run
 Compile using make:
 ```bash
 make
 ```
 Running with QEMU (using default 'out' dir):
 ```bash
-qemu-system-x86_64 out/boot_sect.bin
+qemu-system-i386 out/spigos_img
 ```
 That's it!

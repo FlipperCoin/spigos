@@ -1,21 +1,20 @@
-OUT = out
-objects =  $(addprefix $(OUT)/obj/, $(addsuffix .o, kernel_entry kernel))
+objects =  $(addprefix out/obj/, $(addsuffix .o, kernel_entry kernel))
 
 .PHONY: build clean
 
-build: $(OUT)/kernel.bin
+build: out/kernel.bin
 
 clean:
-	if [ -d $(OUT) ]; then rm -r $(OUT); fi
+	if [ -d out ]; then rm -r out; fi
 
-$(OUT):
+out:
 	mkdir -p $@/obj/
 
-$(OUT)/kernel.bin: $(objects)
+out/kernel.bin: $(objects)
 	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
 
-$(OUT)/obj/kernel_entry.o: kernel_entry.asm | $(OUT)
+out/obj/kernel_entry.o: kernel_entry.asm | out
 	nasm $< -f elf -o $@
 
-$(OUT)/obj/kernel.o: kernel.cpp | $(OUT)
+out/obj/kernel.o: kernel.cpp | out
 	g++ -o $@ -m32 -ffreestanding -c -fno-pie $<

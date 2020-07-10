@@ -1,6 +1,8 @@
 OUT ?= out
+boot_img = boot/out/boot_sect.bin kernel/out/kernel.bin
+submakes = $(boot_img)
 
-.PHONY: build clean
+.PHONY: build clean $(submakes)
 
 build: $(OUT)/spigos_img
 
@@ -12,12 +14,8 @@ clean:
 $(OUT):
 	mkdir -p $@
 
-$(OUT)/spigos_img: boot/out/boot_sect.bin kernel/out/kernel.bin | $(OUT)
+$(OUT)/spigos_img: $(boot_img) | $(OUT)
 	cat $^ > $@
 
-boot/out/boot_sect.bin:
-	$(MAKE) -C boot
-
-kernel/out/kernel.bin: 
-	$(MAKE) -C kernel
-
+$(submakes):
+	$(MAKE) -C $(firstword $(subst /, ,$@))
