@@ -21,4 +21,7 @@ if [ $cpErrorCode -eq 0 ]; then
     echo "Finished sync succesfully"
 else
     echo "Sync failed with error code $cpErrorCode"
+    exit 1
 fi
+
+exit 0
