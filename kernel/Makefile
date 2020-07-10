@@ -1,4 +1,4 @@
-objects =  $(addprefix out/obj/, $(addsuffix .o, kernel_entry kernel))
+objects := $(addprefix out/obj/, $(addsuffix .o, kernel_entry kernel))
 
 .PHONY: build clean
 
@@ -16,5 +16,5 @@ out/kernel.bin: $(objects)
 out/obj/kernel_entry.o: kernel_entry.asm | out
 	nasm $< -f elf -o $@
 
-out/obj/kernel.o: kernel.cpp | out
+out/obj/kernel.o: kernel.cpp print.cpp | out
 	g++ -o $@ -m32 -ffreestanding -c -fno-pie $<

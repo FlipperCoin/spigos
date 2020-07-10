@@ -1,14 +1,16 @@
 OUT ?= out
 boot_img = boot/out/boot_sect.bin kernel/out/kernel.bin
-submakes = $(boot_img)
+foreign_targets := $(boot_img)
+foreign_targets_dirs := $(basename $(foreign_targets))
+get_root_dir = $(firstword $(subst /, ,$(dir)))
+submakes := $(foreach dir,$(foreign_targets_dirs),$(get_root_dir))
 
 .PHONY: build clean $(submakes)
 
 build: $(OUT)/spigos_img
 
 clean:
-	$(MAKE) -C boot clean
-	$(MAKE) -C kernel clean
+	for submake in $(submakes); do $(MAKE) -C $$submake clean; done;
 	if [ -d $(OUT) ]; then rm -r $(OUT); fi
 
 $(OUT):
@@ -17,5 +19,7 @@ $(OUT):
 $(OUT)/spigos_img: $(boot_img) | $(OUT)
 	cat $^ > $@
 
+$(foreign_targets): $(submakes)
+	
 $(submakes):
-	$(MAKE) -C $(firstword $(subst /, ,$@))
+	$(MAKE) -C $@
