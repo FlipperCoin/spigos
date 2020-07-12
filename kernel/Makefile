@@ -1,20 +1,29 @@
-objects := $(addprefix out/obj/, $(addsuffix .o, kernel_entry kernel))
+sources := $(wildcard src/*.cpp)
+includes = ../drivers/include include
+headers := $(foreach dir,$(include),$(wildcard $(dir)/*.h))
+objects := $(patsubst src/%.cpp,out/obj/%.o,$(sources)) ../drivers/out/obj/*.o
+foreign = ../drivers
 
-.PHONY: build clean
+.PHONY: build clean out $(foreign)
 
-build: out/kernel.bin
+build: out/bin/kernel.bin
 
-clean:
-	if [ -d out ]; then rm -r out; fi
+clean: 
+	for submake in $(foreign); do $(MAKE) -C $$submake clean; done;
+	rm -rf out
 
 out:
 	mkdir -p $@/obj/
+	mkdir -p $@/bin/
 
-out/kernel.bin: $(objects)
+out/bin/kernel.bin: out/obj/kernel_entry.o $(objects)
 	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
 
-out/obj/kernel_entry.o: kernel_entry.asm | out
+out/obj/%.o: src/%.cpp $(headers) ../drivers | out
+	g++ -o $@ -m32 -ffreestanding -c -fno-pie $(addprefix -I ,$(includes)) $<
+
+out/obj/%.o: src/%.asm | out
 	nasm $< -f elf -o $@
 
-out/obj/kernel.o: kernel.cpp *.cpp | out
-	g++ -o $@ -m32 -ffreestanding -c -fno-pie $<
+$(foreign):
+	$(MAKE) -C $@

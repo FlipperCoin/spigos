@@ -1,5 +1,5 @@
 OUT ?= out
-boot_img = boot/out/boot_sect.bin kernel/out/kernel.bin
+boot_img = boot/out/bin/boot_sect.bin kernel/out/bin/kernel.bin
 foreign_targets := $(boot_img)
 foreign_targets_dirs := $(basename $(foreign_targets))
 get_root_dir = $(firstword $(subst /, ,$(dir)))
