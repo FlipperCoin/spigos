@@ -75,7 +75,7 @@ short getOffset(int col, int row) {
 }
 
 void writeToVideoMem(unsigned short c, unsigned int offset) {
-    unsigned short *vidmem = (unsigned short*)0xb8000;
+    unsigned short *vidmem = (unsigned short*)VIDEO_ADDRESS;
     vidmem[offset] = c;
 }
 
