@@ -1,7 +1,8 @@
-sources := $(wildcard src/*.cpp)
+cpp_sources := $(wildcard src/*.cpp)
+asm_sources := $(wildcard src/*.asm)
 includes = ../drivers/include include
 headers := $(foreach dir,$(include),$(wildcard $(dir)/*.h))
-objects := $(patsubst src/%.cpp,out/obj/%.o,$(sources)) 
+objects := $(patsubst src/%.cpp,out/obj/%.o,$(cpp_sources)) $(patsubst src/%.asm,out/obj/%.o,$(asm_sources)) 
 foreign = ../drivers
 
 .PHONY: build clean out $(foreign)
@@ -16,7 +17,7 @@ out:
 	mkdir -p $@/obj/
 	mkdir -p $@/bin/
 
-out/bin/kernel.bin: out/obj/kernel_entry.o $(objects)
+out/bin/kernel.bin: $(objects)
 	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ ../drivers/out/obj/*.o --oformat binary
 
 out/obj/%.o: src/%.cpp $(headers) ../drivers | out
