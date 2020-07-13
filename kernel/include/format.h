@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <types.h>
 
 #define MAX_BASE 36
 
