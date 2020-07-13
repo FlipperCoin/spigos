@@ -50,7 +50,6 @@ void printAt(unsigned char c, int col, int row, unsigned char attr) {
     }
     else {
         offset = getCurser();
-        offset >>= 8;
     }
 
     if (c == '\n') {
@@ -104,8 +103,18 @@ short handleScrolling(short offset) {
         short* vidmem = (short*)VIDEO_ADDRESS;
         int rowsUp = (offset - MAX_VID_OFFSET) / MAX_COLS + 1;
         short vidmemcopy[MAX_VID_OFFSET + 1];
-        memcpy(vidmemcopy, vidmem + rowsUp*MAX_COLS, MAX_VID_OFFSET + 1);
+        memcpy(vidmemcopy, vidmem + rowsUp*MAX_COLS, sizeof(short)*(MAX_VID_OFFSET + 1));
+        memcpy(vidmem, vidmemcopy, sizeof(short)*(MAX_VID_OFFSET + 1));
         offset = offset - rowsUp*MAX_COLS;
     }
     return offset;
+}
+
+void clearScreen() {
+    short* vidmem = (short*)VIDEO_ADDRESS;
+    for (int i = 0; i <= MAX_VID_OFFSET; i++) {
+        vidmem[i] &= 0xFF00;
+    }
+    
+    setCurser(0);
 }

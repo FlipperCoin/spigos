@@ -8,7 +8,7 @@
 
 #define WHITE_ON_BLACK 0x0f
 
-#define REG_SCREEN_ADDR 0x3DF
+#define REG_SCREEN_ADDR 0x3D4
 #define REG_SCREEN_DATA 0x3D5
 
 #define H_CURSOR_OFF 0x0E
@@ -21,3 +21,5 @@ void print(char c);
 
 short getCurser();
 void setCurser(short);
+
+void clearScreen();
