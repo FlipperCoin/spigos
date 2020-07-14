@@ -80,7 +80,6 @@ void sendEOI(bool isSlave) {
 }
 
 int initPIC() {
-    
     maskAll();
     int err;
     if (err = remapPIC(0x20, 0x28)) return err;

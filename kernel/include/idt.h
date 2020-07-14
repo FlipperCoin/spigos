@@ -19,11 +19,7 @@ typedef struct IDTEntry {
 typedef struct IDTDescr {
     uint_16 limit;
     IDTEntry *base;
-} IDTDescr;
-
-typedef struct IDT {
-    IDTEntry entries[IDT_ENTRIES_COUNT];
-} IDT;
+} __attribute__((packed)) IDTDescr ;
 
 void loadIDT();
 void setEntry(uint_8 offset, IDTEntry entry);

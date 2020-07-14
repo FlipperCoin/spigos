@@ -2,12 +2,7 @@ SECTION .TEXT
     GLOBAL load_idt
     
 load_idt:
-    push ebp
-    mov ebp, esp
-
-    mov eax, [ebp+8]
-    lidt [eax]
+    mov edx, [esp+4]
+    lidt [edx]
     sti
-
-    leave
     ret

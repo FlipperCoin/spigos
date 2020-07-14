@@ -6,13 +6,15 @@
 extern "C" int KernelMain() {
     clearScreen();
     
-    println("Hello Kernel!");
+    println("==== SpigOS ====\n");
+
+    println("Initializing PIC & IDT...");
 
     initPIC();
     initKeyboardDriver();
     loadIDT();
 
-    println("Hello Again!");
+    println("Done.");
 
     return 0;
 }
