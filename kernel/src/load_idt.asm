@@ -7,6 +7,7 @@ load_idt:
 
     mov eax, [ebp+8]
     lidt [eax]
+    sti
 
     leave
     ret

@@ -1,16 +1,17 @@
 #include <screen.h>
+#include <keyboard.h>
 #include <idt.h>
+#include <pic.h>
 
-void keyboardInterrupt() {
-    return;
-}
+
 
 extern "C" int KernelMain() {
     clearScreen();
     
     println("Hello Kernel!");
 
-    // registerInterrupt(9, (void*)keyboardInterrupt, 0x0E, 0);
+    initPIC();
+    initKeyboardDriver();
     loadIDT();
 
     println("Hello Again!");

@@ -2,6 +2,12 @@
 
 #define IDT_ENTRIES_COUNT 256
 
+enum Gate {
+    task = 0x05,
+    interrupt = 0x0E,
+    trap = 0x0F
+};
+
 typedef struct IDTEntry {
     uint_16 offset1;
     uint_16 selector;
@@ -16,8 +22,8 @@ typedef struct IDTDescr {
 } IDTDescr;
 
 typedef struct IDT {
-    IDTEntry gates[IDT_ENTRIES_COUNT];
+    IDTEntry entries[IDT_ENTRIES_COUNT];
 } IDT;
 
 void loadIDT();
-void registerInterrupt(uint_8 interrupt, void *offset, uint_8 type, uint_8 dpl);
+void setEntry(uint_8 offset, IDTEntry entry);
