@@ -3,8 +3,6 @@
 #include <idt.h>
 #include <pic.h>
 
-
-
 extern "C" int KernelMain() {
     clearScreen();
     

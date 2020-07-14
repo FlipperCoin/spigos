@@ -10,5 +10,5 @@ keyboardISR(interrupt_frame *frame) {
 }
 
 void initKeyboardDriver() {
-    registerInterrupt(21, (void*)keyboardISR, Gate::interrupt);
+    registerInterrupt(0x21, (void*)keyboardISR, Gate::interrupt);
 }

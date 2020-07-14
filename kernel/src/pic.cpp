@@ -2,6 +2,11 @@
 #include <pic.h>
 #include <port.h>
 
+void maskAll() {
+    portByteOut(PIC1_DATA, 0xFF);
+    portByteOut(PIC2_DATA, 0xFB);
+}
+
 int setIRQMask(uint_8 line) {
     uint_16 port;
 
@@ -75,5 +80,12 @@ void sendEOI(bool isSlave) {
 }
 
 int initPIC() {
-    return remapPIC(0x20, 0x28);
+    
+    maskAll();
+    int err;
+    if (err = remapPIC(0x20, 0x28)) return err;
+    
+    clearIRQMask(0x01);
+
+    return 0;
 }
