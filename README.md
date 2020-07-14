@@ -27,4 +27,3 @@ Running with QEMU (using default 'out' dir):
 ```bash
 qemu-system-i386 out/spigos_img
 ```
-That's it!
