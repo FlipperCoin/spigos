@@ -27,3 +27,7 @@ Running with QEMU (using default 'out' dir):
 ```bash
 qemu-system-i386 out/spigos_img
 ```
+
+## Credits  
+I would have never been able to get this project started without Nick Blundell's "*Writing a Simple Operating System - from Scratch*".  
+I also used [OSDev](https://wiki.osdev.org/Main_Page)'s great material, which helped a **lot** (especially after reaching the end of Nich Blundell's book).
