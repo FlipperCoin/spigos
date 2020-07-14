@@ -1,9 +1,9 @@
 #include <screen.h>
 #include <idt.h>
 
-// void keyboardInterrupt() {
-//     return;
-// }
+void keyboardInterrupt() {
+    return;
+}
 
 extern "C" int KernelMain() {
     clearScreen();
