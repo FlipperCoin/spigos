@@ -1,4 +1,4 @@
-#pragma once
+#include <types.h>
 
 #define VIDEO_ADDRESS 0xb8000
 
@@ -18,6 +18,8 @@ void println(char const*);
 void println();
 void print(char const*);
 void print(char c);
+void printHex(uint_32 value);
+void printNum(uint_32 value);
 
 short getCurser();
 void setCurser(short);

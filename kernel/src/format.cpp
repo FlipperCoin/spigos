@@ -1,16 +1,16 @@
 #include <format.h>
 
-int itoa(unsigned int num, char *buf, size_t size) {
-    return itos(num, 10, buf, size);
+int itoa(unsigned int num, char *buf, size_t maxSize) {
+    return itos(num, 10, buf, maxSize);
 }
 
-int itoh(unsigned int num, char *buf, size_t size) {
+int itoh(unsigned int num, char *buf, size_t maxSize) {
     buf[0] = '0';
     buf[1] = 'x';
-    return itos(num, 16, buf + 2, size - 2);
+    return itos(num, 16, buf + 2, maxSize - 2);
 }
 
-int itos(unsigned int num, unsigned int base, char *buf, size_t size) {
+int itos(unsigned int num, unsigned int base, char *buf, size_t maxSize) {
     if (base > MAX_BASE) return -1;
     
     int countOfChars = 1;
@@ -18,7 +18,8 @@ int itos(unsigned int num, unsigned int base, char *buf, size_t size) {
     
     while ((tmp /= base) != 0) countOfChars++;
 
-    if (size < countOfChars + 1) return -1;
+    // +1 for null terminator
+    if (maxSize < countOfChars + 1) return -1;
 
     buf[countOfChars] = '\0';
 

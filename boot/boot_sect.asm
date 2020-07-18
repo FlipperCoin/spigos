@@ -22,7 +22,7 @@ load_kernel:
     mov ebp, esp
 
     mov bx, KERNEL_OFFSET
-    mov al, 8
+    mov al, 50
     mov dl, [BOOT_DRIVE]
     call read_drive
 

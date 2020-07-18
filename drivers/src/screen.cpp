@@ -1,6 +1,7 @@
 #include <port.h>
 #include <screen.h>
 #include <memory.h>
+#include <format.h>
 
 void printAt(char const*, int, int);
 void printAt(char, int, int);
@@ -26,6 +27,20 @@ void print(char const* s) {
 
 void print(char c) {
     printAt(c, -1, -1);
+}
+
+void printHex(uint_32 value) {
+    // length 11: 2 for "0x" + 8 for FFFFFFFF + 1 for null terminator
+    char buf[10];
+    itoh(value, buf, 10);
+    print(buf);
+}
+
+void printNum(uint_32 value) {
+    // 11 because max uint value 4294967295 (10 chars + null terminator)
+    char buf[11];
+    itoa(value, buf, 11);
+    print(buf);
 }
 
 void printAt(char const* s, int col, int row) {

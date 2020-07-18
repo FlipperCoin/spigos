@@ -1,7 +1,9 @@
+#include <types.h>
+
 #define PS2_DATA_PORT 0x60
 
 #define KEYS_BUFFER_SIZE 6
-#define EVENTS_BUFFER_SIZE 1024
+#define EVENTS_BUFFER_SIZE 64
 
 #define NUMBER_OF_KEYCODES 256
 
@@ -49,9 +51,7 @@ enum KeyCode {
 	CloseSquareBracket = 0x1B,
 
 	LeftControl = 0x1D,
-	RightControl = 0x8D,
 	LeftAlt = 0x38,
-	RightAlt = 0xB8,
 	LeftShift = 0x2A,
 	RightShift = 0x36,
 
@@ -102,7 +102,66 @@ enum KeyCode {
 	Backspace = 0xE,
 	Tab = 0x0F,
 	Space = 0x39,
-	Enter = 0x1C
+	Enter = 0x1C,
+	
+	PrevTrack = 0x60,
+	NextTrack,
+	KeypadEnter,
+	RightControl,
+	Mute,
+	Calculator,
+	Play,
+	Stop,
+	VolumeDown,
+	VolumeUp,
+	WWWHome,
+	KeypadSlash,
+	RightAlt,
+	Home,
+	CurserUp,
+	PageUp,
+	CurserLeft,
+	CurserRight,
+	End,
+	CurserDown,
+	PageDown,
+	Insert,
+	Delete,
+	LeftGUI,
+	RightGUI,
+	Apps,
+	Power,
+	Sleep,
+	Wake,
+	WWWSearch,
+	WWWFavorites,
+	WWWRefresh,
+	WWWStop,
+	WWWForward,
+	WWWBack,
+	MyComputer,
+	Email,
+	MediaSelect,
+	PrintScreen,
+	Pause
 };
+
+enum class KeyEventType {
+    Pressed = 0,
+    Released = 1
+};
+
+enum class KeyboardStateFlags {
+    CapsLock = 1,
+    ScrollLock = 2,
+    NumLock = 4
+};
+
+typedef struct KeyEvent {
+    KeyCode key;
+    KeyEventType type;
+    uint_8 state;
+    bool pressedKeysKeymap[NUMBER_OF_KEYCODES];
+} KeyEvent;
 
 void initKeyboardDriver();
