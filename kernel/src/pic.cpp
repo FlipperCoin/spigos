@@ -85,6 +85,7 @@ int initPIC() {
     if (err = remapPIC(0x20, 0x28)) return err;
     
     clearIRQMask(0x01);
+    clearIRQMask(0x00);
 
     return 0;
 }

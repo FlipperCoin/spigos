@@ -2,6 +2,7 @@
 #include <keyboard.h>
 #include <idt.h>
 #include <pic.h>
+#include <pit.h>
 
 extern "C" int KernelMain() {
     clearScreen();
@@ -12,6 +13,7 @@ extern "C" int KernelMain() {
 
     initPIC();
     initKeyboardDriver();
+    initTimer();
     loadIDT();
 
     println("Done.");
