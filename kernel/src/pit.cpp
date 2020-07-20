@@ -6,7 +6,6 @@
 __attribute__((interrupt))
 void
 timerISR(interrupt_frame *frame) {
-    print("Timer");
 
     sendEOI(false);
 }
