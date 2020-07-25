@@ -31,7 +31,7 @@ uint_32 tasksIndex;
 void initializeMultitasking() {
     // Not initializing ESP because it won't help in any way
     tasksTcb[0].state = TaskState::Running;
-    tasksIndex = 1;
+    tasksIndex = 0;
     currentTaskTcb = &tasksTcb[0];
     
 }
@@ -42,10 +42,16 @@ uint_32 stacks[MAX_TASKS][STACK_SIZE];
 int createKernelTask(void (*start)()) {
     if (tasksIndex == (MAX_TASKS - 1)) return -1;
 
-    stacks[++tasksIndex][0] = (uint_32)start;
+    tasksIndex++;
+
+    stacks[tasksIndex][STACK_SIZE - 4] = (uint_32)&stacks[tasksIndex][0]; // EBP
+    stacks[tasksIndex][STACK_SIZE - 3] = 1; // EDI
+    stacks[tasksIndex][STACK_SIZE - 2] = 2; // ESI
+    stacks[tasksIndex][STACK_SIZE - 1] = 3; // EBX
+    stacks[tasksIndex][STACK_SIZE] = (uint_32)start;
 
     TCB *newTaskTcb = &tasksTcb[tasksIndex];
-    newTaskTcb->esp = stacks[tasksIndex];
+    newTaskTcb->esp = &stacks[tasksIndex][STACK_SIZE - 4];
     newTaskTcb->state = TaskState::Ready;
 
     return 0;
