@@ -8,8 +8,8 @@
 
 #include <types.h>
 
-#define MAX_TASKS 1024
-#define STACK_SIZE 1024
+#define MAX_TASKS 2048
+#define STACK_SIZE 2048
 
 enum TaskState {
     Running,
@@ -57,12 +57,38 @@ int createKernelTask(void (*start)()) {
     return 0;
 }
 
+uint_32 runningTaskIndex = 0;
+
+void schedule() {
+    TCB *runningTask = &tasksTcb[runningTaskIndex];
+    runningTask->state = TaskState::Ready;
+    
+    runningTaskIndex = (runningTaskIndex + 1) % (tasksIndex + 1);
+    runningTask = &tasksTcb[runningTaskIndex];
+    runningTask->state = TaskState::Running;
+    switch_to_task(runningTask);
+}
+
 // ===
 
-void testTask() {
+void testTask1() {
     while (true) {
-        println("Kernel test task");
-        switch_to_task(&tasksTcb[0]);
+        println("Kernel test task 1");
+        schedule();
+    }
+}
+
+void testTask2() {
+    while (true) {
+        println("Kernel test task 2");
+        schedule();
+    }
+}
+
+void testTask3() {
+    while (true) {
+        println("Kernel test task 3");
+        schedule();
     }
 }
 
@@ -84,13 +110,15 @@ extern "C" int KernelMain() {
     println("Done.");
     println();
 
-    // ===
+    // === 
 
-    createKernelTask(testTask);
+    createKernelTask(testTask1);
+    createKernelTask(testTask2);
+    createKernelTask(testTask3);
 
     while (true) {
         println("Kernel main task");
-        switch_to_task(&tasksTcb[1]);
+        schedule();
     }
 
     // ===

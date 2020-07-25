@@ -8,3 +8,5 @@ typedef struct interrupt_frame {
 } interrupt_frame;
 
 void registerInterrupt(uint_8 interrupt, void *isr, Gate type, uint_8 dpl = 0);
+void enableInterrupts();
+void disableInterrupts();

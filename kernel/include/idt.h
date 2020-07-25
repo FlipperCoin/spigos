@@ -1,3 +1,5 @@
+#pragma once
+
 #include <types.h>
 
 #define IDT_ENTRIES_COUNT 256
