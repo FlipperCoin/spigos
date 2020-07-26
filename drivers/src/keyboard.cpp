@@ -550,9 +550,7 @@ void addKeyEvent(KeyCode keyCode, KeyEventType eventType) {
     eventsBuffer[eventsIndex++] = newEvent;
 }
 
-__attribute__((interrupt))
-void 
-keyboardISR(interrupt_frame *frame) {
+void keyboardISR(interrupt_frame *frame) {
     uint_8 key = portByteIn(PS2_DATA_PORT);
     KeyCode keyCode;
     KeyEventType type;
@@ -564,5 +562,5 @@ keyboardISR(interrupt_frame *frame) {
 }
 
 void initKeyboardDriver() {
-    registerInterrupt(0x21, (void*)keyboardISR, Gate::interrupt);
+    registerInterrupt(0x21, keyboardISR, Gate::interrupt);
 }

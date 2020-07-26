@@ -18,15 +18,15 @@ real_mode:
     call switch_to_pm
 
 load_kernel:
-    push ebp
-    mov ebp, esp
+    push bp
+    mov bp, sp
 
     mov bx, KERNEL_OFFSET
-    mov al, 50
+    mov al, 54
     mov dl, [BOOT_DRIVE]
     call read_drive
 
-    pop ebp
+    pop bp
     ret
 
 BOOT_DRIVE:

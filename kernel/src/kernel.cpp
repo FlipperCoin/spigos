@@ -17,9 +17,14 @@ enum TaskState {
     Paused
 };
 
+// NOTE: The structure is also used in "switch_to_task", 
+// when updating the struct make sure it is correct there aswell
 typedef struct TCB {
     uint_32 *esp;
     TaskState state;
+    uint_32 cpuTime; // in milliseconds
+    uint_32 lastStartTimeTick; // updated every time the task is ran by the scheduler
+    char *name;
 } TCB;
 
 extern "C" void switch_to_task(TCB *nextTask);
@@ -31,6 +36,8 @@ uint_32 tasksIndex;
 void initializeMultitasking() {
     // Not initializing ESP because it won't help in any way
     tasksTcb[0].state = TaskState::Running;
+    tasksTcb[0].lastStartTimeTick = getTicks();
+    tasksTcb[0].name = "kernel_main";
     tasksIndex = 0;
     currentTaskTcb = &tasksTcb[0];
     
@@ -39,7 +46,7 @@ void initializeMultitasking() {
 // First stack is a fake and not used because the kernel already has its stack setup from boot
 uint_32 stacks[MAX_TASKS][STACK_SIZE];
 
-int createKernelTask(void (*start)()) {
+int createKernelTask(void (*start)(), char *name = "") {
     if (tasksIndex == (MAX_TASKS - 1)) return -1;
 
     tasksIndex++;
@@ -53,41 +60,64 @@ int createKernelTask(void (*start)()) {
     TCB *newTaskTcb = &tasksTcb[tasksIndex];
     newTaskTcb->esp = &stacks[tasksIndex][STACK_SIZE - 4];
     newTaskTcb->state = TaskState::Ready;
-
+    newTaskTcb->name = name; // TODO: change with dynamic mem
     return 0;
 }
 
 uint_32 runningTaskIndex = 0;
 
 void schedule() {
+    uint_32 ticks = getTicks();
+
     TCB *runningTask = &tasksTcb[runningTaskIndex];
+    runningTask->cpuTime += getMs(ticks - runningTask->lastStartTimeTick);
     runningTask->state = TaskState::Ready;
-    
+    print(runningTask->name);
+    print(": ");
+    printNum(runningTask->cpuTime);
+    println();
+
     runningTaskIndex = (runningTaskIndex + 1) % (tasksIndex + 1);
     runningTask = &tasksTcb[runningTaskIndex];
     runningTask->state = TaskState::Running;
+    runningTask->lastStartTimeTick = ticks;
     switch_to_task(runningTask);
 }
 
 // ===
 
 void testTask1() {
+    uint_32 n = 0;
     while (true) {
         println("Kernel test task 1");
+        for (size_t i = 0; i < 1000000000; i++)
+        {
+            n += i;
+        }
         schedule();
     }
 }
 
 void testTask2() {
+    uint_32 n = 0;
     while (true) {
         println("Kernel test task 2");
+        for (size_t i = 0; i < 1000000; i++)
+        {
+            n += i;
+        }
         schedule();
     }
 }
 
 void testTask3() {
+    uint_32 n = 0;
     while (true) {
         println("Kernel test task 3");
+        for (size_t i = 0; i < 1000; i++)
+        {
+            n += i;
+        }
         schedule();
     }
 }
@@ -109,12 +139,12 @@ extern "C" int KernelMain() {
 
     println("Done.");
     println();
-
+    
     // === 
 
-    createKernelTask(testTask1);
-    createKernelTask(testTask2);
-    createKernelTask(testTask3);
+    createKernelTask(testTask1, "task_1");
+    createKernelTask(testTask2, "task_2");
+    createKernelTask(testTask3, "task_3");
 
     while (true) {
         println("Kernel main task");

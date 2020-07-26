@@ -1,9 +1,19 @@
 #include <interrupt.h>
+#include <screen.h>
 
-void registerInterrupt(uint_8 interrupt, void *isr, Gate type, uint_8 dpl) {
+// extern void (*isrWrappers[IDT_ENTRIES_COUNT])(interrupt_frame*);
+extern void (*isrWrappers[49])(interrupt_frame*);
+
+// void (*registeredIsrs[IDT_ENTRIES_COUNT])(interrupt_frame*);
+void (*registeredIsrs[49])(interrupt_frame*);
+
+void registerInterrupt(uint_8 interrupt, void (*isr)(interrupt_frame*), Gate type, uint_8 dpl) {
+    registeredIsrs[interrupt] = isr;
+
     IDTEntry entry;
 
-    uint_32 isrAddr = (uint_32)isr;
+    uint_32 isrAddr = (uint_32)isrWrappers[interrupt];
+    
     entry.offset1 = isrAddr & 0x0000FFFF;
     entry.offset2 = (isrAddr & 0xFFFF0000) >> 16;
     entry.selector = 0x08;
