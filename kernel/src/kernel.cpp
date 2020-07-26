@@ -72,13 +72,12 @@ void schedule() {
     TCB *runningTask = &tasksTcb[runningTaskIndex];
     runningTask->cpuTime += getMs(ticks - runningTask->lastStartTimeTick);
     runningTask->state = TaskState::Ready;
-    print(runningTask->name);
-    print(": ");
-    printNum(runningTask->cpuTime);
-    println();
-
-    runningTaskIndex = (runningTaskIndex + 1) % (tasksIndex + 1);
-    runningTask = &tasksTcb[runningTaskIndex];
+    
+    do {
+        runningTaskIndex = (runningTaskIndex + 1) % (tasksIndex + 1);
+        runningTask = &tasksTcb[runningTaskIndex];
+    } while (runningTask->state != TaskState::Ready); // Full loop will lead to the task that we just put in the ready state
+    
     runningTask->state = TaskState::Running;
     runningTask->lastStartTimeTick = ticks;
     switch_to_task(runningTask);
@@ -90,7 +89,7 @@ void testTask1() {
     uint_32 n = 0;
     while (true) {
         println("Kernel test task 1");
-        for (size_t i = 0; i < 1000000000; i++)
+        for (size_t i = 0; i < 100000000; i++)
         {
             n += i;
         }
@@ -102,7 +101,7 @@ void testTask2() {
     uint_32 n = 0;
     while (true) {
         println("Kernel test task 2");
-        for (size_t i = 0; i < 1000000; i++)
+        for (size_t i = 0; i < 10000000; i++)
         {
             n += i;
         }
@@ -114,7 +113,7 @@ void testTask3() {
     uint_32 n = 0;
     while (true) {
         println("Kernel test task 3");
-        for (size_t i = 0; i < 1000; i++)
+        for (size_t i = 0; i < 100000; i++)
         {
             n += i;
         }
@@ -139,7 +138,7 @@ extern "C" int KernelMain() {
 
     println("Done.");
     println();
-    
+
     // === 
 
     createKernelTask(testTask1, "task_1");
