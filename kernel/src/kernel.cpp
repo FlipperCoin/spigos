@@ -44,8 +44,17 @@ void initializeMultitasking() {
     
 }
 
+void lockScheduler() {
+    disableInterrupts();
+}
+
+void unlockScheduler() {
+    enableInterrupts();
+}
+
 void kernelTaskStart(void (*start)()) {
-    println("Starting new task...");
+    unlockScheduler();
+    
     start();
 }
 
@@ -81,16 +90,6 @@ int createKernelTask(void (*start)(), char *name = "") {
     return 0;
 }
 
-
-
-void lockScheduler() {
-    disableInterrupts();
-}
-
-void unlockScheduler() {
-    enableInterrupts();
-}
-
 uint_32 runningTaskIndex = 0;
 
 void schedule() {
@@ -120,7 +119,9 @@ void testTask1() {
         {
             n += i;
         }
+        lockScheduler();
         schedule();
+        unlockScheduler();
     }
 }
 
@@ -132,7 +133,9 @@ void testTask2() {
         {
             n += i;
         }
+        lockScheduler();
         schedule();
+        unlockScheduler();
     }
 }
 
@@ -144,7 +147,9 @@ void testTask3() {
         {
             n += i;
         }
+        lockScheduler();
         schedule();
+        unlockScheduler();
     }
 }
 
@@ -174,7 +179,9 @@ extern "C" int KernelMain() {
 
     while (true) {
         println("Kernel main task");
+        lockScheduler();
         schedule();
+        unlockScheduler();
     }
 
     // ===
