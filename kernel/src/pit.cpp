@@ -3,6 +3,7 @@
 #include <pit.h>
 #include <pic.h>
 #include <port.h>
+#include <tasks.h>
 
 #define OSCILLATOR_FREQUENCY 1193181.0
 
@@ -22,12 +23,12 @@ double getFrequency() {
     return frequency;
 } 
 
-uint_32 getTicks() {
+uint_32 getTicksSinceBoot() {
     return totalTicks;
 }
 
-uint_32 getMs() {
-    return getMs(totalTicks);
+uint_32 getMsSinceBoot() {
+    return getMs(getTicksSinceBoot());
 }
 
 uint_32 getMs(uint_32 ticks) {
@@ -37,6 +38,10 @@ uint_32 getMs(uint_32 ticks) {
 void timerISR(interrupt_frame *frame) {
     totalTicks++;
     
+    timeUpdate(getMsSinceBoot());
+
+    // TODO: Schedule
+
     sendEOI(false);
 }
 
