@@ -24,14 +24,22 @@ void registerInterrupt(uint_8 interrupt, void (*isr)(interrupt_frame*), Gate typ
     setEntry(interrupt, entry);
 } 
 
+uint_32 disableInterruptsCounter = 0;
+
 void enableInterrupts() {
-    __asm__ (
-        "sti"
-    );
+    if (disableInterrupts > 0)
+        disableInterruptsCounter--;
+        
+    if (disableInterruptsCounter == 0) {
+        __asm__ (
+            "sti"
+        );
+    }
 }
 
 void disableInterrupts() {
     __asm__ (
         "cli"
     );
+    disableInterruptsCounter++;
 }

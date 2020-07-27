@@ -3,6 +3,7 @@
 #include <idt.h>
 #include <pic.h>
 #include <pit.h>
+#include <interrupt.h>
 
 // === Tasks
 
@@ -43,6 +44,20 @@ void initializeMultitasking() {
     
 }
 
+void kernelTaskStart(void (*start)()) {
+    println("Starting new task...");
+    start();
+}
+
+void kernelTaskExit() {
+    println("Kernel task exited...");
+
+    // Need to properly implement task exit, loop for now
+    while (true) {
+        
+    }
+}
+
 // First stack is a fake and not used because the kernel already has its stack setup from boot
 uint_32 stacks[MAX_TASKS][STACK_SIZE];
 
@@ -51,17 +66,29 @@ int createKernelTask(void (*start)(), char *name = "") {
 
     tasksIndex++;
 
-    stacks[tasksIndex][STACK_SIZE - 4] = (uint_32)&stacks[tasksIndex][0]; // EBP
-    stacks[tasksIndex][STACK_SIZE - 3] = 1; // EDI
-    stacks[tasksIndex][STACK_SIZE - 2] = 2; // ESI
-    stacks[tasksIndex][STACK_SIZE - 1] = 3; // EBX
+    stacks[tasksIndex][STACK_SIZE - 6] = (uint_32)&stacks[tasksIndex][STACK_SIZE - 2]; // EBP
+    stacks[tasksIndex][STACK_SIZE - 5] = 1; // EDI
+    stacks[tasksIndex][STACK_SIZE - 4] = 2; // ESI
+    stacks[tasksIndex][STACK_SIZE - 3] = 3; // EBX
+    stacks[tasksIndex][STACK_SIZE - 2] = (uint_32)kernelTaskStart;
+    stacks[tasksIndex][STACK_SIZE - 1] = (uint_32)kernelTaskExit;
     stacks[tasksIndex][STACK_SIZE] = (uint_32)start;
 
     TCB *newTaskTcb = &tasksTcb[tasksIndex];
-    newTaskTcb->esp = &stacks[tasksIndex][STACK_SIZE - 4];
+    newTaskTcb->esp = &stacks[tasksIndex][STACK_SIZE - 6];
     newTaskTcb->state = TaskState::Ready;
     newTaskTcb->name = name; // TODO: change with dynamic mem
     return 0;
+}
+
+
+
+void lockScheduler() {
+    disableInterrupts();
+}
+
+void unlockScheduler() {
+    enableInterrupts();
 }
 
 uint_32 runningTaskIndex = 0;
