@@ -9,13 +9,29 @@ uint_32 tasksIndex;
 
 extern "C" void switch_to_task(TCB *nextTask);
 
-void initializeMultitasking() {
+void idleTask() {
+    while (true) { 
+        // TODO: remove once scheduler works on timer, add HLT support, preempt idle task ===
+        lockScheduler();
+        schedule();
+        unlockScheduler();
+        // ===
+    }
+}
+
+void initKernelMain() {
     // Not initializing ESP because it won't help in any way
     tasksTcb[0].state = TaskState::Running;
     tasksTcb[0].lastStartTimeTick = getTicksSinceBoot();
     tasksTcb[0].name = "kernel_main";
     tasksIndex = 0;
     currentTaskTcb = &tasksTcb[0];
+}
+
+void initializeMultitasking() {
+    initKernelMain();
+
+    createKernelTask(idleTask, "idle");
 }
 
 void lockScheduler() {
