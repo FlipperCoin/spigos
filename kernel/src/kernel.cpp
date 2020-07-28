@@ -11,10 +11,6 @@ void testTask1() {
     while (true) {
         println("Kernel test task 1");
         sleep(1000);
-        
-        lockScheduler();
-        schedule();
-        unlockScheduler();
     }
 }
 
@@ -46,10 +42,6 @@ extern "C" int KernelMain() {
         println("Kernel main task");
 
         sleep(250);
-
-        lockScheduler();
-        schedule();
-        unlockScheduler();
     }
 
     // ===

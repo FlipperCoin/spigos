@@ -40,8 +40,6 @@ void timerISR(interrupt_frame *frame) {
     
     timeUpdate(getMsSinceBoot());
 
-    // TODO: Schedule
-
     sendEOI(false);
 }
 
