@@ -85,17 +85,19 @@ int createKernelTask(void (*start)(), char *name) {
 // index to the last task, NOT to first open spot
 uint_32 runningTaskIndex = 0;
 
-void blockTask() {
-    lockScheduler();
+void blockTask(bool shouldLock) {
+    if (shouldLock == true) 
+        lockScheduler();
+
     currentTaskTcb->cpuTime += getMs(getTicksSinceBoot() - currentTaskTcb->lastStartTimeTick);
     currentTaskTcb->state = TaskState::Paused;
     schedule();
     unlockScheduler();
 }
 
-void unblockTask(uint_32 taskIndex) {
+void unblockTask(TCB *task) {
     lockScheduler();
-    tasksTcb[taskIndex].state = TaskState::Ready;
+    task->state = TaskState::Ready;
     unlockScheduler();
 }
 
@@ -134,7 +136,7 @@ void timeUpdate(uint_32 time) {
     {
         TCB *task = sleepingTasks[i];
         if (task->state == TaskState::Paused && task->sleepExpiry < time) {
-            task->state = TaskState::Ready;
+            unblockTask(task);
             sleepingTasks[i] = nullptr;
             removedCount++;
         }
@@ -172,8 +174,12 @@ void timeUpdate(uint_32 time) {
     unlockScheduler();
 }
 
+TCB *getCurrentTask() {
+    return currentTaskTcb;
+}
+
 void sleepUntil(uint_32 time) {
-    lockScheduler();
+    lockScheduler(); // TODO: should only lock timer with a mutex or something, then block task can always block scheduler
 
     uint_32 timeSinceBoot = getMsSinceBoot();
     if (time < timeSinceBoot) {
@@ -190,8 +196,8 @@ void sleepUntil(uint_32 time) {
     sleepingTasks[sleepingTasksIndex]->sleepExpiry = time;
     sleepingTasksIndex++;
 
-    unlockScheduler();
     blockTask();
+    unlockScheduler();
 }
 
 void sleep(uint_32 ms) {

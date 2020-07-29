@@ -6,6 +6,7 @@
 #include <format.h>
 #include <types.h>
 #include <memory.h>
+#include <tasks.h>
 
 namespace ScanCodes {
     uint_8 PrevTrackPressed[] = {0xE0, 0x10};
@@ -405,6 +406,8 @@ KeyCodeMapping mappings[75] = {
     }
 };
 
+uint_8 keyCodeToAscii[NUMBER_OF_KEYCODES];
+
 uint_8 keyboardState;
 bool pressedKeysKeymap[NUMBER_OF_KEYCODES];
 
@@ -413,6 +416,62 @@ static size_t keysIndex;
 
 static KeyEvent eventsBuffer[EVENTS_BUFFER_SIZE];
 static size_t eventsIndex;
+
+TCB *waitingTask;
+
+KeyEvent readKey() {
+    lockScheduler(); // TODO: should be lock keyboard with a mutex or something, then return lock scheduler to "blockTask"
+
+    if (eventsIndex == 0) {
+        // TODO: only lock scheduler here or lock inside block task
+        waitingTask = getCurrentTask();
+        blockTask();
+    }
+
+    KeyEvent event = eventsBuffer[--eventsIndex];
+    unlockScheduler(); // TODO: should be unlock keyboard
+    return event;
+}
+
+bool isShiftableKey(KeyCode key) {
+    return false; // not supported yet :)
+}
+
+uint_8 shiftAlpha(uint_8 ascii) {
+    if (ascii <= 90) return (ascii + 32);
+    else return (ascii - 32);
+}
+
+bool isAlpha(uint_8 ascii) {
+    return ((ascii >= 65 && ascii <= 90) || (ascii >= 97 && ascii <= 122));
+}
+
+uint_8 readChar() {
+    KeyEvent keyEvent;
+    uint_8 ascii;
+    do {
+        keyEvent = readKey();
+        ascii = keyCodeToAscii[keyEvent.key];
+    } while (keyEvent.type != KeyEventType::Pressed || ascii == 0);
+
+    bool capsLockOn = keyEvent.state & (int)KeyboardStateFlags::CapsLock;
+    bool shiftIsPressed = keyEvent.pressedKeysKeymap[KeyCode::LeftShift] || keyEvent.pressedKeysKeymap[KeyCode::RightShift];
+    
+    if (shiftIsPressed) {
+        bool isAlphaChar = isAlpha(ascii);
+        if (isAlphaChar && !capsLockOn) {
+            ascii = shiftAlpha(ascii);
+        }
+        else if (!isAlpha && isShiftableKey(keyEvent.key)) {
+            // Shift keycode or ascii code, or use tryShiftKey() instead of isShiftable()->Shift()
+        }
+    }
+    else if (capsLockOn && isAlpha(ascii)) {
+        ascii = shiftAlpha(ascii);   
+    }
+
+    return ascii;
+}
 
 bool tryResolveSingleCharacterScanCode(uint_8 key, KeyCode *keycode, KeyEventType *type) {
     // pressed
@@ -555,12 +614,72 @@ void keyboardISR(interrupt_frame *frame) {
     KeyCode keyCode;
     KeyEventType type;
     if (tryResolveScanCode(key, &keyCode, &type)) {
+        lockScheduler(); // TODO: lock keyboard not scheduler
         addKeyEvent(keyCode, type);
+
+        if (waitingTask != nullptr) {
+            unblockTask(waitingTask);
+            waitingTask = nullptr;
+        }
+        unlockScheduler();
     }
     
     sendEOI(false); 
 }
 
+void initKeyCodeToAscii() {
+    keyCodeToAscii[KeyCode::A] = 'a';
+    keyCodeToAscii[KeyCode::B] = 'b';
+    keyCodeToAscii[KeyCode::C] = 'c';
+    keyCodeToAscii[KeyCode::D] = 'd';
+    keyCodeToAscii[KeyCode::E] = 'e';
+    keyCodeToAscii[KeyCode::F] = 'f';
+    keyCodeToAscii[KeyCode::G] = 'g';
+    keyCodeToAscii[KeyCode::H] = 'h';
+    keyCodeToAscii[KeyCode::I] = 'i';
+    keyCodeToAscii[KeyCode::J] = 'j';
+    keyCodeToAscii[KeyCode::K] = 'k';
+    keyCodeToAscii[KeyCode::L] = 'l';
+    keyCodeToAscii[KeyCode::M] = 'm';
+    keyCodeToAscii[KeyCode::N] = 'n';
+    keyCodeToAscii[KeyCode::O] = 'o';
+    keyCodeToAscii[KeyCode::P] = 'p';
+    keyCodeToAscii[KeyCode::Q] = 'q';
+    keyCodeToAscii[KeyCode::R] = 'r';
+    keyCodeToAscii[KeyCode::S] = 's';
+    keyCodeToAscii[KeyCode::T] = 't';
+    keyCodeToAscii[KeyCode::U] = 'u';
+    keyCodeToAscii[KeyCode::V] = 'v';
+    keyCodeToAscii[KeyCode::W] = 'w';
+    keyCodeToAscii[KeyCode::X] = 'x';
+    keyCodeToAscii[KeyCode::Y] = 'y';
+    keyCodeToAscii[KeyCode::Z] = 'z';
+
+    keyCodeToAscii[KeyCode::Zero] = '0';
+    keyCodeToAscii[KeyCode::One] = '1';
+    keyCodeToAscii[KeyCode::Two] = '2';
+    keyCodeToAscii[KeyCode::Three] = '3';
+    keyCodeToAscii[KeyCode::Four] = '4';
+    keyCodeToAscii[KeyCode::Five] = '5';
+    keyCodeToAscii[KeyCode::Six] = '6';
+    keyCodeToAscii[KeyCode::Seven] = '7';
+    keyCodeToAscii[KeyCode::Eight] = '8';
+    keyCodeToAscii[KeyCode::Nine] = '9';
+    
+    keyCodeToAscii[KeyCode::Keypad0] = '0';
+    keyCodeToAscii[KeyCode::Keypad1] = '1';
+    keyCodeToAscii[KeyCode::Keypad2] = '2';
+    keyCodeToAscii[KeyCode::Keypad3] = '3';
+    keyCodeToAscii[KeyCode::Keypad4] = '4';
+    keyCodeToAscii[KeyCode::Keypad5] = '5';
+    keyCodeToAscii[KeyCode::Keypad6] = '6';
+    keyCodeToAscii[KeyCode::Keypad7] = '7';
+    keyCodeToAscii[KeyCode::Keypad8] = '8';
+    keyCodeToAscii[KeyCode::Keypad9] = '9';
+}
+
 void initKeyboardDriver() {
+    initKeyCodeToAscii();
+
     registerInterrupt(0x21, keyboardISR, Gate::interrupt);
 }

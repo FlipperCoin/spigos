@@ -28,4 +28,9 @@ void lockScheduler();
 void unlockScheduler();
 void schedule();
 
+void blockTask(bool shouldLock = false);
+void unblockTask(TCB *task);
+
+TCB *getCurrentTask();
+
 void timeUpdate(uint_32 time);

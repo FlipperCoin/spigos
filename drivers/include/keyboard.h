@@ -165,3 +165,6 @@ typedef struct KeyEvent {
 } KeyEvent;
 
 void initKeyboardDriver();
+
+KeyEvent readKey();
+uint_8 readChar();

@@ -6,14 +6,6 @@
 #include <interrupt.h>
 #include <tasks.h>
 
-void testTask1() {
-    uint_32 n = 0;
-    while (true) {
-        println("Kernel test task 1");
-        sleep(1000);
-    }
-}
-
 extern "C" int KernelMain() {
     clearScreen();
     
@@ -36,12 +28,10 @@ extern "C" int KernelMain() {
 
     // === 
 
-    createKernelTask(testTask1, "task_1");
-
     while (true) {
-        println("Kernel main task");
+        uint_8 c = readChar();
 
-        sleep(250);
+        print(c);
     }
 
     // ===
