@@ -69,6 +69,8 @@ void printAt(unsigned char c, int col, int row, unsigned char attr) {
 
     if (c == '\n') {
         offset = getEndLine(offset);
+    } else if (c == '\t') {
+        offset += 4;
     } else {
         writeToVideoMem(getVgaCharacter(c, attr), offset);
     }

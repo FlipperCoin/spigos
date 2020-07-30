@@ -676,6 +676,24 @@ void initKeyCodeToAscii() {
     keyCodeToAscii[KeyCode::Keypad7] = '7';
     keyCodeToAscii[KeyCode::Keypad8] = '8';
     keyCodeToAscii[KeyCode::Keypad9] = '9';
+
+    keyCodeToAscii[KeyCode::Space] = ' ';
+    keyCodeToAscii[KeyCode::Tab] = '\t';
+    keyCodeToAscii[KeyCode::Enter] = '\n';
+    keyCodeToAscii[KeyCode::Period] = '.';
+    keyCodeToAscii[KeyCode::Comma] = ',';
+    keyCodeToAscii[KeyCode::Slash] = '/';
+    keyCodeToAscii[KeyCode::SemiColon] = ';';
+    keyCodeToAscii[KeyCode::OpenSquareBracket] = '[';
+    keyCodeToAscii[KeyCode::CloseSquareBracket] = ']';
+    keyCodeToAscii[KeyCode::BackSlash] = '\\';
+    keyCodeToAscii[KeyCode::BackTick] = '`';
+    keyCodeToAscii[KeyCode::KeypadMinus] = '-';
+    keyCodeToAscii[KeyCode::KeypadPlus] = '+';
+    keyCodeToAscii[KeyCode::KeypadPeriod] = '.';
+    keyCodeToAscii[KeyCode::KeypadAsterisk] = '*';
+    keyCodeToAscii[KeyCode::Minus] = '-';
+    keyCodeToAscii[KeyCode::Equals] = '=';
 }
 
 void initKeyboardDriver() {
