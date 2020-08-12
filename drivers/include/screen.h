@@ -21,6 +21,9 @@ void print(char c);
 void printHex(uint_32 value);
 void printNum(uint_32 value);
 
+void backspace();
+void enter();
+
 short getCurser();
 void setCurser(short);
 

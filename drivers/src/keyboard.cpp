@@ -446,29 +446,37 @@ bool isAlpha(uint_8 ascii) {
     return ((ascii >= 65 && ascii <= 90) || (ascii >= 97 && ascii <= 122));
 }
 
-uint_8 readChar() {
-    KeyEvent keyEvent;
-    uint_8 ascii;
-    do {
-        keyEvent = readKey();
-        ascii = keyCodeToAscii[keyEvent.key];
-    } while (keyEvent.type != KeyEventType::Pressed || ascii == 0);
+uint_8 keyEventToAscii(const KeyEvent *event) {
+    uint_8 ascii = keyCodeToAscii[event->key];
 
-    bool capsLockOn = keyEvent.state & (int)KeyboardStateFlags::CapsLock;
-    bool shiftIsPressed = keyEvent.pressedKeysKeymap[KeyCode::LeftShift] || keyEvent.pressedKeysKeymap[KeyCode::RightShift];
+    if (ascii == 0) return 0;
+
+    bool capsLockOn = event->state & (int)KeyboardStateFlags::CapsLock;
+    bool shiftIsPressed = event->pressedKeysKeymap[KeyCode::LeftShift] || event->pressedKeysKeymap[KeyCode::RightShift];
     
     if (shiftIsPressed) {
         bool isAlphaChar = isAlpha(ascii);
         if (isAlphaChar && !capsLockOn) {
             ascii = shiftAlpha(ascii);
         }
-        else if (!isAlpha && isShiftableKey(keyEvent.key)) {
+        else if (!isAlpha && isShiftableKey(event->key)) {
             // Shift keycode or ascii code, or use tryShiftKey() instead of isShiftable()->Shift()
         }
     }
     else if (capsLockOn && isAlpha(ascii)) {
         ascii = shiftAlpha(ascii);   
     }
+
+    return ascii;
+}
+
+uint_8 readChar() {
+    KeyEvent keyEvent;
+    uint_8 ascii;
+    do {
+        keyEvent = readKey();
+        ascii = keyEventToAscii(&keyEvent);
+    } while (keyEvent.type != KeyEventType::Pressed || ascii == 0);
 
     return ascii;
 }
@@ -694,6 +702,7 @@ void initKeyCodeToAscii() {
     keyCodeToAscii[KeyCode::KeypadAsterisk] = '*';
     keyCodeToAscii[KeyCode::Minus] = '-';
     keyCodeToAscii[KeyCode::Equals] = '=';
+    keyCodeToAscii[KeyCode::Backspace] = '\b';
 }
 
 void initKeyboardDriver() {

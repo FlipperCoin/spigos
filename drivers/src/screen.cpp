@@ -70,7 +70,7 @@ void printAt(unsigned char c, int col, int row, unsigned char attr) {
     if (c == '\n') {
         offset = getEndLine(offset);
     } else if (c == '\t') {
-        offset += 4;
+        offset += 3;
     } else {
         writeToVideoMem(getVgaCharacter(c, attr), offset);
     }
@@ -80,6 +80,18 @@ void printAt(unsigned char c, int col, int row, unsigned char attr) {
     offset = handleScrolling(offset);
 
     setCurser(offset);
+}
+
+void backspace() {
+    short offset = getCurser() - 1;
+
+    writeToVideoMem(getVgaCharacter(' ', WHITE_ON_BLACK), offset);
+
+    setCurser(offset);
+}
+
+void enter() {
+    setCurser(getEndLine(getCurser()) + 1);
 }
 
 int getEndLine(int offset) {

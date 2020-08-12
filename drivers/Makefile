@@ -1,6 +1,6 @@
 sources := $(wildcard src/*.cpp)
 includes = ../kernel/include include
-headers := $(foreach dir,$(include),$(wildcard $(dir)/*.h))
+headers := $(foreach dir,$(includes),$(wildcard $(dir)/*.h))
 objects := $(patsubst src/%.cpp,out/obj/%.o,$(sources))
 
 .PHONY: build clean out

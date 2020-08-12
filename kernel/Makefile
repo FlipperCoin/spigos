@@ -23,13 +23,13 @@ out/bin/kernel.bin: $(objects)
 	ld -m elf_i386 -o $@ out/bin/kernel.elf -Ttext 0x1000 --oformat binary
 
 out/obj/%.o: src/%.cpp $(headers) ../drivers | out
-	g++ -o $@ -m32 -ffreestanding -c -fno-pie $(addprefix -I ,$(includes)) $<
+	g++ -o $@ -m32 -ffreestanding -c -fno-pie -fno-exceptions $(addprefix -I ,$(includes)) $<
 
 out/obj/%.o: src/%.asm | out
 	nasm $< -f elf -o $@
 
 out/obj/%.o: src/general-regs/%.cpp $(headers) | out
-	g++ -o $@ -m32 -ffreestanding -c -fno-pie -mgeneral-regs-only $(addprefix -I ,$(includes)) $<
+	g++ -o $@ -m32 -ffreestanding -c -fno-pie -mgeneral-regs-only -fno-exceptions $(addprefix -I ,$(includes)) $<
 
 $(foreign):
 	$(MAKE) -C $@

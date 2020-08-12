@@ -5,6 +5,8 @@
 #include <pit.h>
 #include <interrupt.h>
 #include <tasks.h>
+#include <memory.h>
+#include <shell.h>
 
 extern "C" int KernelMain() {
     clearScreen();
@@ -28,11 +30,7 @@ extern "C" int KernelMain() {
 
     // === 
 
-    while (true) {
-        uint_8 c = readChar();
-
-        print(c);
-    }
+    shell();
 
     // ===
 

@@ -14,7 +14,7 @@ enum KeyCode {
 	E = 0x12,
 	R = 0x13,
 	T = 0x14,
-	Z = 0x15,
+	Y = 0x15,
 	U = 0x16,
 	I = 0x17,
 	O = 0x18,
@@ -28,7 +28,7 @@ enum KeyCode {
 	J = 0x24,
 	K = 0x25,
 	L = 0x26,
-	Y = 0x2C,
+	Z = 0x2C,
 	X = 0x2D,
 	C = 0x2E,
 	V = 0x2F,
@@ -168,3 +168,5 @@ void initKeyboardDriver();
 
 KeyEvent readKey();
 uint_8 readChar();
+
+uint_8 keyEventToAscii(const KeyEvent *event);
