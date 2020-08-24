@@ -78,6 +78,12 @@ void driveISR(interrupt_frame *frame) {
 }
 
 void initAta() {
+    uint_8 status = portByteIn(STATUS_REG);
+    if (status == 0xFF) {
+        println("Floating bus.");
+        return;
+    }
+
     portByteOut(DRIVE_REG, 0xE0);
     portByteOut(SECTOR_COUNT_REG, 0);
     portByteOut(LBA_LOW_REG, 0);
@@ -87,9 +93,10 @@ void initAta() {
     identify = true;
     portByteOut(COMMAND_REG, IDENTIFY_CMD);
     
-    uint_8 status = portByteIn(STATUS_REG);
+    status = portByteIn(STATUS_REG);
     if (status == 0) {
         println("Drive doesn't exist.");
+        return;
     }
 
     // 14 for primary ATA Hard Disk
