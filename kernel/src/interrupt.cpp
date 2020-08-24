@@ -1,10 +1,8 @@
 #include <interrupt.h>
 #include <screen.h>
 
-// extern void (*isrWrappers[IDT_ENTRIES_COUNT])(interrupt_frame*);
 extern void (*isrWrappers[49])(interrupt_frame*);
 
-// void (*registeredIsrs[IDT_ENTRIES_COUNT])(interrupt_frame*);
 void (*registeredIsrs[49])(interrupt_frame*);
 
 void registerInterrupt(uint_8 interrupt, void (*isr)(interrupt_frame*), Gate type, uint_8 dpl) {

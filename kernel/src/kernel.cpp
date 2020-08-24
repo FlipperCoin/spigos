@@ -1,5 +1,6 @@
 #include <screen.h>
 #include <keyboard.h>
+#include <ata.h>
 #include <idt.h>
 #include <pic.h>
 #include <pit.h>
@@ -20,12 +21,21 @@ extern "C" int KernelMain() {
     initializeMultitasking(); 
     
     initKeyboardDriver();
+    initAta();
     initTimer();
     loadIDT();
 
     println("Initializing tasks...");
 
     println("Done.");
+    println();
+
+    uint_8 sector[512];
+    read(0, 1, sector);
+    printNum(sector[510]);
+    println();
+    printNum(sector[511]);
+    println();
     println();
 
     // === 
