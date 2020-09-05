@@ -24,18 +24,6 @@ extern "C" int KernelMain() {
     initAta();
     initTimer();
     loadIDT();
-
-    println("Loading Kernel from ATA Drive...");
-
-    // WIP, reading first sector for driver test
-    uint_8 sector[512];
-    read(0, 1, sector);
-
-    printNum(sector[510]);
-    println();
-    printNum(sector[511]);
-    println();
-    println();
     
     println("Done.");
     println();
