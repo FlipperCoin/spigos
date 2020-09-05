@@ -25,17 +25,19 @@ extern "C" int KernelMain() {
     initTimer();
     loadIDT();
 
-    println("Initializing tasks...");
+    println("Loading Kernel from ATA Drive...");
 
-    println("Done.");
-    println();
-
+    // WIP, reading first sector for driver test
     uint_8 sector[512];
     read(0, 1, sector);
+
     printNum(sector[510]);
     println();
     printNum(sector[511]);
     println();
+    println();
+    
+    println("Done.");
     println();
 
     // === 

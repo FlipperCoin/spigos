@@ -19,8 +19,10 @@
 
 // Commands
 
-#define READ_SECTORS_WITH_RETRY_CMD 20
-#define WRITE_SECTORS_WITH_RETRY_CMD 30
+#define READ_SECTORS_WITH_RETRY_CMD 0x20
+#define READ_SECTORS_WITHOUT_RETRY_CMD 0x21
+#define WRITE_SECTORS_WITH_RETRY_CMD 0x30
+#define WRITE_SECTORS_WITHOUT_RETRY_CMD 0x31
 #define IDENTIFY_CMD 0xEC
 
 // Register Values
@@ -37,14 +39,14 @@ enum Error {
 };
 
 enum Status {
-    ERR = 0, // Indicates an error occurred. Send a new command to clear it (or nuke it with a Software Reset).
-    IDX = 1, // Index. Always set to zero.
-    CORR = 2, // Corrected data. Always set to zero.
-    DRQ = 3, // Set when the drive has PIO data to transfer, or is ready to accept PIO data.
-    SRV = 4, // Overlapped Mode Service Request.
-    DF = 5, // Drive Fault Error (does not set ERR).
-    RDY = 6, // Bit is clear when drive is spun down, or after an error. Set otherwise.
-    BSY = 7 // Indicates the drive is preparing to send/receive data (wait for it to clear). In case of 'hang' (it never clears), do a software reset.
+    ERR = 0x01, // Indicates an error occurred. Send a new command to clear it (or nuke it with a Software Reset).
+    IDX = 0x02, // Index. Always set to zero.
+    CORR = 0x04, // Corrected data. Always set to zero.
+    DRQ = 0x08, // Set when the drive has PIO data to transfer, or is ready to accept PIO data.
+    SRV = 0x10, // Overlapped Mode Service Request.
+    DF = 0x20, // Drive Fault Error (does not set ERR).
+    RDY = 0x40, // Bit is clear when drive is spun down, or after an error. Set otherwise.
+    BSY = 0x80 // Indicates the drive is preparing to send/receive data (wait for it to clear). In case of 'hang' (it never clears), do a software reset.
 };
 
 void initAta();

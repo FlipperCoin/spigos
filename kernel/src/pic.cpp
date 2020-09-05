@@ -79,12 +79,28 @@ void sendEOI(bool isSlave) {
     }
 }
 
+uint_16 getRegister(uint_8 reg) {
+    portByteOut(PIC1_COMMAND, OCW3 | 0x02 | reg); 
+    portByteOut(PIC2_COMMAND, OCW3 | 0x02 | reg); 
+
+    return (portByteIn(PIC2_COMMAND) << 8) | portByteIn(PIC1_COMMAND);
+}
+
+uint_16 getIRR() {
+    return getRegister(0);
+}
+
+uint_16 getISR() {
+    return getRegister(1);
+}
+
 int initPIC() {
     maskAll();
     int err;
     if (err = remapPIC(0x20, 0x28)) return err;
     
     clearIRQMask(0x0E);
+    clearIRQMask(0x02);
     clearIRQMask(0x01);
     clearIRQMask(0x00);
 

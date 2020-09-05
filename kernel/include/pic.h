@@ -9,6 +9,7 @@
 #define ICW4 0x01
 
 #define OCW2 0x00
+#define OCW3 0x08
 
 enum ICW1Flags {
     ICW4Present = 0x01,
@@ -31,3 +32,5 @@ int initPIC();
 void sendEOI(bool isSlave = false);
 int setIRQMask(uint_8 line);
 int clearIRQMask(uint_8 line);
+uint_16 getIRR();
+uint_16 getISR();
