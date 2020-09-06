@@ -9,7 +9,7 @@ void ataRead(unsigned int lbaBlock, unsigned char sectorCount, unsigned char *bu
 
 extern "C" void BootloaderMain() {
     auto kernelAddr = (unsigned char *)KERNEL_ADDR;
-    ataRead(KERNEL_FIRST_LBA_BLOCK, KERNEL_SIZE, kernelAddr);
+    ataRead(KERNEL_FIRST_LBA_BLOCK, KERNEL_SIZE / 512, kernelAddr);
     
     auto kernelEntry = (int (*)())kernelAddr;
     kernelEntry();
