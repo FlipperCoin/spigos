@@ -1,6 +1,6 @@
 [bits 16]
 [org 0x7c00]
-KERNEL_OFFSET equ 0x1000
+BOOTLOADER_OFFSET equ 0x1000
 real_mode:
     mov bp, 0x9000      ; set the stack
     mov sp, bp
@@ -21,7 +21,7 @@ load_kernel:
     push bp
     mov bp, sp
 
-    mov bx, KERNEL_OFFSET
+    mov bx, BOOTLOADER_OFFSET
     mov al, 54
     mov dl, [BOOT_DRIVE]
     call read_drive
@@ -44,7 +44,7 @@ boot_main:
     mov eax, PROTECTED_MODE_MSG
     call print_pm
 
-    call KERNEL_OFFSET 
+    call BOOTLOADER_OFFSET 
     
     jmp $
 

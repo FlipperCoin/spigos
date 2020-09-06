@@ -19,8 +19,8 @@ out:
 	mkdir -p $@/bin/
 
 out/bin/kernel.bin: $(objects)
-	ld -m elf_i386 -o out/bin/kernel.elf -Ttext 0x1000 out/obj/kernel_entry.o $^ ../drivers/out/obj/*.o
-	ld -m elf_i386 -o $@ out/bin/kernel.elf -Ttext 0x1000 --oformat binary
+	ld -m elf_i386 -o out/bin/kernel.elf -Ttext 0x10000 out/obj/kernel_entry.o $^ ../drivers/out/obj/*.o
+	ld -m elf_i386 -o $@ out/bin/kernel.elf -Ttext 0x10000 --oformat binary
 
 out/obj/%.o: src/%.cpp $(headers) ../drivers | out
 	g++ -o $@ -m32 -ffreestanding -c -fno-pie -fno-exceptions $(addprefix -I ,$(includes)) $<

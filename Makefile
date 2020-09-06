@@ -1,6 +1,6 @@
 OUT ?= out
-boot_img = boot/out/bin/boot_sect.bin kernel/out/bin/kernel.bin out/bin/filler.bin
-foreign_targets := boot/out/bin/boot_sect.bin kernel/out/bin/kernel.bin
+boot_img = bootloader/out/bin/bootable.img
+foreign_targets := kernel/out/bin/kernel.bin
 foreign_targets_dirs := $(basename $(foreign_targets))
 get_root_dir = $(firstword $(subst /, ,$(dir)))
 submakes := $(foreach dir,$(foreign_targets_dirs),$(get_root_dir))
@@ -11,6 +11,7 @@ build: $(OUT)/spigos_img
 
 clean:
 	for submake in $(submakes); do $(MAKE) -C $$submake clean; done;
+	$(MAKE) -C bootloader clean
 	if [ -d $(OUT) ]; then rm -r $(OUT); fi
 
 $(OUT):
@@ -19,8 +20,8 @@ $(OUT):
 $(OUT)/spigos_img: $(boot_img) | $(OUT)
 	cat $^ > $@
 
-$(OUT)/bin/filler.bin: boot/out/bin/boot_sect.bin kernel/out/bin/kernel.bin | $(OUT)
-	./filler.sh $@
+bootloader/out/bin/bootable.img: kernel/out/bin/kernel.bin
+	$(MAKE) -C $(firstword $(subst /, ,$@)) KERNEL_BIN=../kernel/out/bin/kernel.bin
 
 $(foreign_targets): $(submakes)
 	

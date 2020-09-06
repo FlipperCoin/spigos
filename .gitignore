@@ -4,7 +4,8 @@
 # project
 out/*
 
-# files
+# binaries
 *.o
 *.bin
 *.elf
+*.img
