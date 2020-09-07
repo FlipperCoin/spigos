@@ -6,8 +6,11 @@
 #endif
 
 void ataRead(unsigned int lbaBlock, unsigned char sectorCount, unsigned char *buffer);
+void print(char *msg);
 
 extern "C" void BootloaderMain() {
+    print("Bootloader 2nd boot sequence.");
+    
     auto kernelAddr = (unsigned char *)KERNEL_ADDR;
     ataRead(KERNEL_FIRST_LBA_BLOCK, KERNEL_SIZE / 512, kernelAddr);
     

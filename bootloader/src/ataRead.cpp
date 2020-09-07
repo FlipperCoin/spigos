@@ -47,6 +47,8 @@ enum Status {
     BSY = 0x80 // Indicates the drive is preparing to send/receive data (wait for it to clear). In case of 'hang' (it never clears), do a software reset.
 };
 
+void print(char *msg);
+
 unsigned char portByteIn(unsigned short port) {
     unsigned char result;
     __asm__("in %%dx, %%al" : "=a" (result) : "d" (port));
@@ -68,7 +70,7 @@ void waitBSY() {
 }
 
 void waitDRQ() {
-    while (portByteIn(ALT_STATUS_REG) & Status::DRQ);
+    while (!(portByteIn(ALT_STATUS_REG) & Status::DRQ));
 }
 
 void ataRead(unsigned int lbaBlock, unsigned char sectorCount, unsigned char *buffer) {

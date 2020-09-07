@@ -41,7 +41,7 @@ REAL_MODE_MSG:
 [bits 32]
 boot_main:
 
-    mov eax, PROTECTED_MODE_MSG
+    push PROTECTED_MODE_MSG
     call print_pm
 
     call BOOTLOADER_OFFSET 

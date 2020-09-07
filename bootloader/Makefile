@@ -32,12 +32,12 @@ out/bin/bootloader_filler.bin: filler.sh out/bin/bootloader.bin | out
 out/bin/kernel_filler.bin: filler.sh $(KERNEL_BIN) | out
 	./filler.sh $@ $(PADDED_KERNEL_SIZE) $(KERNEL_BIN)
 
-out/bin/bootloader.bin: out/obj/bootloader_entry.o out/obj/bootloader.o out/obj/ataRead.o | out
+out/bin/bootloader.bin: out/obj/bootloader_entry.o out/obj/bootloader.o out/obj/ataRead.o out/obj/print.o | out
 	ld -m elf_i386 -o out/bin/bootloader.elf -Ttext 0x1000 out/obj/bootloader_entry.o $^
 	ld -m elf_i386 -o $@ out/bin/bootloader.elf -Ttext 0x1000 --oformat binary
 
 out/obj/bootloader.o: src/bootloader.cpp | out
-	g++ -o $@ -m32 -ffreestanding -c -fno-pie -fno-exceptions -DKERNEL_SIZE=$(PADDED_KERNEL_SIZE) $<
+	g++ -o $@ -m32 -ffreestanding -c -fno-pie -fno-exceptions -DKERNEL_SIZE=$(PADDED_KERNEL_SIZE) $^
 
 out/obj/%.o: src/%.cpp | out
 	g++ -o $@ -m32 -ffreestanding -c -fno-pie -fno-exceptions $<
