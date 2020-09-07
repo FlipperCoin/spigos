@@ -41,20 +41,20 @@ void identifyDrive() {
         return;
     }
     else if (status & Status::ERR == 1) {
-        // uint_8 errVal1 = portByteIn(LBA_MID_REG);
-        // uint_8 errVal2 = portByteIn(LBA_HIGH_REG);
-        // if (errVal1 == 0x14 && errVal2 == 0xEB) {
-        //     println("Error identifying ATA device: Detected an ATAPI device.");
-        // }
-        // else if (errVal1 == 0x3C && errVal2 == 0xC3) {
-        //     println("Error identifying ATA device: Detected a SATA device.");
-        // }
-        // else if (errVal1 == 0 && errVal2 == 0) {
-        //     println("Error identifying ATA device: ATA identify abort.");
-        // }
-        // else {
-        //     println("Error identifying ATA device.");
-        // }
+        uint_8 errVal1 = portByteIn(LBA_MID_REG);
+        uint_8 errVal2 = portByteIn(LBA_HIGH_REG);
+        if (errVal1 == 0x14 && errVal2 == 0xEB) {
+            println("Error identifying ATA device: Detected an ATAPI device.");
+        }
+        else if (errVal1 == 0x3C && errVal2 == 0xC3) {
+            println("Error identifying ATA device: Detected a SATA device.");
+        }
+        else if (errVal1 == 0 && errVal2 == 0) {
+            println("Error identifying ATA device: ATA identify abort.");
+        }
+        else {
+            println("Error identifying ATA device.");
+        }
 
         print("ERROR ");
         printHex(portByteIn(ERROR_REG));
