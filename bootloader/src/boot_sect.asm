@@ -14,10 +14,10 @@ real_mode:
     mov ax, REAL_MODE_MSG
     call println
 
-    call load_kernel
+    call load_bootloader
     call switch_to_pm
 
-load_kernel:
+load_bootloader:
     push bp
     mov bp, sp
 

@@ -34,9 +34,9 @@ out/obj/%.o: src/%.cpp | out
 out/obj/%.o: src/%.asm | out
 	nasm $< -f elf -o $@
 
-# the reason I don't want a kernel that is larger than 0xEF0000 is that I don't wanna 	\
+# the reason I don't want a kernel that is larger than 0x800000 is that I don't wanna 	\
 		fuck with addresses like mem mapped IO or something because I'm too lazy to check 	\
-		what's in larger than 0x00F00000 addr range (0x10000 kernel start addr + 0xEF0000).	\
+		what's in larger than 0x00F00000 addr range (0x100000 kernel start addr + 0x800000).	\
 		should be able to do the check with memory detection BIOS routine
 kernelbin: 
 	if [ -z "$(KERNEL_BIN)" ]; then echo "KERNEL_BIN is not set"; exit 1; fi
@@ -45,6 +45,6 @@ kernelbin:
 	
 	$(eval KERNEL_SIZE := $(shell stat -c %s $(KERNEL_BIN)))
 	$(eval PADDED_KERNEL_SIZE := $(shell echo $$(($(KERNEL_SIZE)+(512-$(KERNEL_SIZE)%512)%512))))
-	$(eval MAX_KERNEL_SIZE := $(shell echo $$((0xEF0000))))
+	$(eval MAX_KERNEL_SIZE := $(shell echo $$((0x800000))))
 
 	if [ "$(PADDED_KERNEL_SIZE)" -gt "$(MAX_KERNEL_SIZE)" ]; then echo "padded kernel size ($(PADDED_KERNEL_SIZE)) exceeded max size ($(MAX_KERNEL_SIZE))"; exit 1; fi

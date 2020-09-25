@@ -1,4 +1,4 @@
-#define KERNEL_ADDR 0x10000
+#define KERNEL_ADDR 0x100000
 #define KERNEL_FIRST_LBA_BLOCK 55
 
 #if !defined(KERNEL_SIZE)
