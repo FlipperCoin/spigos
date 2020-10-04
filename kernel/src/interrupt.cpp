@@ -10,17 +10,28 @@ void registerInterrupt(uint_8 interrupt, void (*isr)(interrupt_frame*), Gate typ
 
     IDTEntry entry;
 
-    uint_32 isrAddr = (uint_32)isrWrappers[interrupt];
-    
+    print("isr wrappers start add: ");
+    printHex((uint_32)isrWrappers);
+    println();
+    print("registered isrs start add: ");
+    printHex((uint_32)registeredIsrs);
+    println();
+    registerRawInterrupt(interrupt, isrWrappers[interrupt], type, dpl);
+} 
+
+void registerRawInterrupt(uint_8 interrupt, void (*isr)(interrupt_frame*), Gate type, uint_8 dpl) {
+    IDTEntry entry;
+    uint_32 isrAddr = (uint_32)isr;
+
     entry.offset1 = isrAddr & 0x0000FFFF;
     entry.offset2 = (isrAddr & 0xFFFF0000) >> 16;
     entry.selector = 0x08;
     entry.zero = 0;
     entry.typeAttr = type;
-    entry.typeAttr |= (0x80 + ((dpl & 0x3) << 5)); // P(1), DPL, S(0)
+    entry.typeAttr |= (0x80 + ((dpl & 0x3) << 5)); // P(1, set to 0 for unused interrupts), DPL (priviledge level), S(0, always 0 for interrupt and trap gates)
 
     setEntry(interrupt, entry);
-} 
+}
 
 uint_32 disableInterruptsCounter = 0;
 

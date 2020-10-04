@@ -5,6 +5,8 @@
 
 #define TIME_SLICE_LENGTH 5;
 
+static bool multitaskingInitialized = false;
+
 TCB *currentTaskTcb;
 TCB tasksTcb[MAX_TASKS];
 uint_32 tasksIndex;
@@ -30,6 +32,8 @@ void initializeMultitasking() {
     initKernelMain();
 
     createKernelTask(idleTask, "idle");
+
+    multitaskingInitialized = true;
 }
 
 void lockScheduler() {
@@ -127,6 +131,8 @@ TCB *sleepingTasks[MAX_SLEEPING_TASKS];
 uint_32 sleepingTasksIndex = 0;
 
 void timeUpdate(uint_32 time) {
+    if (!multitaskingInitialized) return;
+
     lockScheduler();
     
     // Resume sleeping tasks, put into ready state

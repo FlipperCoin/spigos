@@ -34,3 +34,4 @@ int setIRQMask(uint_8 line);
 int clearIRQMask(uint_8 line);
 uint_16 getIRR();
 uint_16 getISR();
+void enableHardwareInterrupts();

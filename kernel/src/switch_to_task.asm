@@ -29,5 +29,5 @@ switch_to_task:
     pop edi
     pop esi
     pop ebx
-    
+
     ret                         ; return to next task 

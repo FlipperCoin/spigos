@@ -19,7 +19,7 @@ protected_mode:
     mov fs, ax
     mov gs, ax
     
-    mov ebp, 0x90000
+    mov ebp, 0xEF0000
     mov esp, ebp
 
     call boot_main

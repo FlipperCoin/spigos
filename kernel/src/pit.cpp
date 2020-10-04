@@ -36,6 +36,7 @@ uint_32 getMs(uint_32 ticks) {
 }
 
 void timerISR(interrupt_frame *frame) {
+    print("AAAAAAAAA");
     totalTicks++;
     
     timeUpdate(getMsSinceBoot());
@@ -43,7 +44,7 @@ void timerISR(interrupt_frame *frame) {
     sendEOI(false);
 }
 
-void setDivier(uint_16 divider) {
+void setDivider(uint_16 divider) {
     // Channel 0, lobyte/hibyte, rate generator
     portByteOut(MODE_COMMAND_REG, 0b00110100);
 
@@ -57,7 +58,7 @@ int initTimer(double desiredFrequency) {
 
     uint_32 divider = OSCILLATOR_FREQUENCY / desiredFrequency;
     
-    setDivier((uint_16)divider);
+    setDivider((uint_16)divider);
 
     registerInterrupt(0x20, timerISR, Gate::interrupt);
     

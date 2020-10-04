@@ -99,10 +99,12 @@ int initPIC() {
     int err;
     if (err = remapPIC(0x20, 0x28)) return err;
     
-    clearIRQMask(0x0E);
-    clearIRQMask(0x02);
-    clearIRQMask(0x01);
-    clearIRQMask(0x00);
-
     return 0;
+}
+
+void enableHardwareInterrupts() {
+    clearIRQMask(0x0E); // primary ATA 
+    clearIRQMask(0x02); // cascade from slave to master PIC
+    clearIRQMask(0x01); // keyboard
+    clearIRQMask(0x00); // timer
 }
