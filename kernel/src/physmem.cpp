@@ -31,7 +31,7 @@ uint_32 kallocPageFrame(size_t numOfPages) {
                     pageFrameMap[j] = PageFrameStatus::Used;
                 }
                 
-                return (pageFramesStartAddr + (firstPageFound * PAGE_SIZE));
+                return (pageFramesStartAddr + (firstPageFound * PAGE_FRAME_SIZE));
             }
         }
         else if (pageFrameMap[i] == PageFrameStatus::Used) {
@@ -43,7 +43,7 @@ uint_32 kallocPageFrame(size_t numOfPages) {
 }
 
 void kfreePageFrames(uint_32 pageFrameAddr, size_t numOfPages) {
-    size_t firstPage = (pageFrameAddr - pageFramesStartAddr) / PAGE_SIZE;
+    size_t firstPage = (pageFrameAddr - pageFramesStartAddr) / PAGE_FRAME_SIZE;
     
     for (size_t i = firstPage; i < firstPage + numOfPages; i++)
     {

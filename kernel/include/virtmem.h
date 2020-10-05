@@ -1,4 +1,6 @@
-#include<types.h>
+#include <types.h>
+
+#define PAGE_SIZE 0x1000
 
 // typedef struct PageDirectoryEntry {
 //     uint_8 flags;
@@ -36,3 +38,5 @@ enum class PageTableEntryFlags {
 };
 
 void enableVirtualMemory();
+uint_32 kallocPage(size_t npages);
+void kfreePages(uint_32 virtualAddress, size_t npages);

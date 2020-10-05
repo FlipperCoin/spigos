@@ -17,68 +17,89 @@ uint_32 createPageTableEntry(void *pageFrameAddr, PageTableEntryFlags flags) {
     return (uint_32)pageFrameAddr | (uint_32)flags;
 }
 
-uint_32 * getPageTableFromPde(uint_32 pde) {
-    return (uint_32*)(pde & 0xFFFFF000);
+uint_32 * getPageTableFromPde(uint_32 *pde) {
+    return (uint_32*)(*pde & 0xFFFFF000);
 }
 
-bool isPdeAllocated(uint_32 pde) {
+uint_32 getPhysicalAddressFromPte(uint_32 *pte) {
+    return *pte & 0xFFFFF000;
+}
+
+bool isPdeAllocated(uint_32 *pde) {
     return getPageTableFromPde(pde) != 0;
 } 
 
-bool isPteAllocated(uint_32 pte) {
-
+uint_32 virtToPhys(uint_32 virtualAddress) {
+    uint_32 *pageTable = getPageTableFromPde(&pageDirectory[(virtualAddress / PAGE_SIZE) / PAGE_TABLE_ENTRIES]);
+    return getPhysicalAddressFromPte(&pageTable[(virtualAddress / PAGE_SIZE) % PAGE_TABLE_ENTRIES]);
 }
 
-uint_32 getPhysicalPageFrameAddressFromPTE(uint_32 pte) {
-    
-}
-
-uint_32 getPhysicalAddress(uint_32 virtualAddr) {
-    return -1; // didn't finish implementation yet
-
-    uint_32 pageAlignedAddr = virtualAddr / 0x1000; // div by 0x1000 (=4096 decimal) because every page is 4 KiB
-    uint_32 idxInPage = virtualAddr % 0x1000;
-    
-    uint_32 pdeIdx = pageAlignedAddr / 0x400; // div by 0x400 (=1024) for page directory idx because every page table covers 0x400 pages 
-    uint_32 pteIdx = pageAlignedAddr % 0x400; // remainder for page table idx 
-
-    uint_32 pde = pageDirectory[pdeIdx];
-    if (!isPdeAllocated(pde)) {
-
-    }
-
-    uint_32 pte = getPageTableFromPde(pde)[pteIdx];
-    if (!isPteAllocated(pte)) {
-
-    }
-
-    return getPhysicalPageFrameAddressFromPTE(pte) + idxInPage;
-}
-
-void selfMap(uint_32 startAddr, uint_32 endAddr) {
-    if ((startAddr % PAGE_SIZE) != 0 || ((endAddr - startAddr) % PAGE_SIZE) != 0) {
+void map(uint_32 virtualAddress, uint_32 physicalAddress, uint_32 npages = 1) {
+    if ((virtualAddress % PAGE_SIZE) != 0 || (physicalAddress % PAGE_SIZE) != 0) {
         // for now code below doesn't support addresses that are not page aligned
         return;
     }
+    
+    uint_32 page = virtualAddress / PAGE_SIZE;
+    uint_32 pageFrame = physicalAddress / PAGE_SIZE;
+    for (size_t i = 0; i < npages; i++) {
+        uint_32 pdeIdx = (page + i) / PAGE_TABLE_ENTRIES;
+        uint_32 pteIdx = (page + i) % PAGE_TABLE_ENTRIES;
 
-    uint_32 firstPage = startAddr / PAGE_SIZE;
-    uint_32 numberOfPages = (endAddr - startAddr) / PAGE_SIZE;
+        uint_32 *pde = &pageDirectory[pdeIdx];
 
-    for (size_t page = firstPage; page < firstPage + numberOfPages; page++)
-    {
-        uint_32 pdeIdx = page / PAGE_TABLE_ENTRIES;
-        uint_32 pteIdx = page % PAGE_TABLE_ENTRIES;
-
-        if (!isPdeAllocated(pageDirectory[pdeIdx])) {
+        if (!isPdeAllocated(pde)) {
             pageDirectory[pdeIdx] = createPageDirectoryEntry(
                 (uint_32*)kallocPageFrame(1), 
                 (PageDirectoryEntryFlags)((uint_32)PageDirectoryEntryFlags::RW | (uint_32)PageDirectoryEntryFlags::Present)
             );
         }
-        
-        getPageTableFromPde(pageDirectory[pdeIdx])[pteIdx] = createPageTableEntry(
-            (void *)(page * PAGE_SIZE), 
+
+        uint_32 *pageTable = getPageTableFromPde(pde);
+
+        pageTable[pteIdx] = createPageTableEntry(
+            (void*)((pageFrame + i) * PAGE_SIZE),
             (PageTableEntryFlags)((uint_32)PageTableEntryFlags::RW | (uint_32)PageTableEntryFlags::Present)
+        );
+    }
+}
+
+void selfMap(uint_32 startAddr, uint_32 endAddr) {
+    if (((endAddr - startAddr) % PAGE_SIZE) != 0) {
+        // doesn't support address ranges that don't fit whole pages
+        return;
+    }
+
+    uint_32 numberOfPages = (endAddr - startAddr) / PAGE_SIZE;
+    
+    map(startAddr, startAddr, numberOfPages);
+}
+
+uint_32 kallocPage(size_t npages) {
+    uint_32 physAddress = kallocPageFrame(npages);
+    uint_32 virtAddress = physAddress;
+    
+    map(virtAddress, physAddress, npages);
+    
+    return virtAddress;
+}
+
+void kfreePages(uint_32 virtualAddress, size_t npages) {
+    uint_32 page = virtualAddress / PAGE_SIZE;
+    for (size_t i = 0; i < npages; i++) {
+        uint_32 pdeIdx = (page + i) / PAGE_TABLE_ENTRIES;
+        uint_32 pteIdx = (page + i) % PAGE_TABLE_ENTRIES;
+
+        uint_32 *pde = &pageDirectory[pdeIdx];
+        uint_32 *pageTable = getPageTableFromPde(pde);
+
+        uint_32 physicalAddress = getPhysicalAddressFromPte(&pageTable[pteIdx]);
+
+        if (i == 0) kfreePageFrames(physicalAddress, npages);
+
+        pageTable[pteIdx] = createPageTableEntry(
+            nullptr,
+            (PageTableEntryFlags)0
         );
     }
 }
