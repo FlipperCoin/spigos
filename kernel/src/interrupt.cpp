@@ -10,12 +10,6 @@ void registerInterrupt(uint_8 interrupt, void (*isr)(interrupt_frame*), Gate typ
 
     IDTEntry entry;
 
-    print("isr wrappers start add: ");
-    printHex((uint_32)isrWrappers);
-    println();
-    print("registered isrs start add: ");
-    printHex((uint_32)registeredIsrs);
-    println();
     registerRawInterrupt(interrupt, isrWrappers[interrupt], type, dpl);
 } 
 

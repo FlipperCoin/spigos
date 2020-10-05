@@ -128,7 +128,7 @@ void schedule() {
 }
 
 TCB *sleepingTasks[MAX_SLEEPING_TASKS];
-uint_32 sleepingTasksIndex = 0;
+uint_32 sleepingTasksCount = 0;
 
 void timeUpdate(uint_32 time) {
     if (!multitaskingInitialized) return;
@@ -138,7 +138,7 @@ void timeUpdate(uint_32 time) {
     // Resume sleeping tasks, put into ready state
 
     uint_32 removedCount = 0;
-    for (size_t i = 0; i < sleepingTasksIndex; i++)
+    for (size_t i = 0; i < sleepingTasksCount; i++)
     {
         TCB *task = sleepingTasks[i];
         if (task->state == TaskState::Paused && task->sleepExpiry < time) {
@@ -150,21 +150,21 @@ void timeUpdate(uint_32 time) {
     
     // Rearrange sleeping tasks array
     if (removedCount != 0) {
-        uint_32 newSleepingTasksIndex = sleepingTasksIndex - removedCount;
+        uint_32 newSleepingTasksCount = sleepingTasksCount - removedCount;
         
         int j = 0;
         int i = 0;
-        while (i < newSleepingTasksIndex && j < sleepingTasksIndex) {    
-            while (i < newSleepingTasksIndex && sleepingTasks[i] != nullptr) {
+        while (i < newSleepingTasksCount && j < sleepingTasksCount) {    
+            while (i < newSleepingTasksCount && sleepingTasks[i] != nullptr) {
                 i++;
             }
 
             if (j == 0) j = i;
-
-            while (j < sleepingTasksIndex && sleepingTasks[j] == nullptr) {
+            
+            while (j < sleepingTasksCount && sleepingTasks[j] == nullptr) {
                 j++;
             }
-
+            
             sleepingTasks[i++] = sleepingTasks[j];
             sleepingTasks[j++] = nullptr;
         }
@@ -193,14 +193,14 @@ void sleepUntil(uint_32 time) {
         return;
     }
 
-    if (sleepingTasksIndex == MAX_SLEEPING_TASKS) {
+    if (sleepingTasksCount == MAX_SLEEPING_TASKS) {
         unlockScheduler();
         return;
     }
-
-    sleepingTasks[sleepingTasksIndex] = currentTaskTcb;
-    sleepingTasks[sleepingTasksIndex]->sleepExpiry = time;
-    sleepingTasksIndex++;
+    
+    sleepingTasks[sleepingTasksCount] = currentTaskTcb;
+    sleepingTasks[sleepingTasksCount]->sleepExpiry = time;
+    sleepingTasksCount++;
 
     blockTask();
     unlockScheduler();

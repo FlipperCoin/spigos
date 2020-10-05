@@ -96,12 +96,13 @@ void initTables() {
     // TODO: cleaner design with this
     // maybe provide a kernel "allocate" method for specific addresses and sizes so drivers like the display driver will be able to allocate this address
     // 0xb8000 - hardware mapped IO for VGA, 0xb87d0 (so up to 0xb9000 for page alignment) is the last addr I believe the screen driver will use
-    // EDIT: actually 0xb9000 still failed, so move up to ba000 (so many hacks >_<)
+    // EDIT: actually 0xb9000 still failed, so move up to 0xba000 (so many hacks >_<)
     selfMap(0xb8000, 0xba000); 
 
     // IHAVENOIDEAWHY*SOB*:
     selfMap(0x00001000, 0x00002000);
     selfMap(0x00007000, 0x00008000);
+    selfMap(0x0000, 0x1000); // on timeUpdate procedure, specifically the while statement "while (i < newSleepingTasksCount && j < sleepingTasksCount)"??? 
 }
 
 void initCr3() {
