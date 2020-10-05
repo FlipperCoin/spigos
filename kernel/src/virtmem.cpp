@@ -89,22 +89,19 @@ void initTables() {
         pageDirectory[i] = createPageDirectoryEntry(nullptr, PageDirectoryEntryFlags::RW);
     }
 
-    uint_32 kernelStart = 0x00100000; // code below works because this addr is page aligned
+    uint_32 kernelStart = 0x00100000; // selfMap works because this addr is page aligned, otherwise need to improve selfMap impl
     uint_32 kernelEnd = 0x00F00000;
 
     selfMap(kernelStart, kernelEnd);
     // TODO: cleaner design with this
     // maybe provide a kernel "allocate" method for specific addresses and sizes so drivers like the display driver will be able to allocate this address
     // 0xb8000 - hardware mapped IO for VGA, 0xb87d0 (so up to 0xb9000 for page alignment) is the last addr I believe the screen driver will use
-    selfMap(0xb8000, 0xb9000); 
+    // EDIT: actually 0xb9000 still failed, so move up to ba000 (so many hacks >_<)
+    selfMap(0xb8000, 0xba000); 
 
     // IHAVENOIDEAWHY*SOB*:
-    selfMap(0x141b000,0x141b900); // idt EDIT: it was changed to 141b000 from 141a000, interesting its a page jump
     selfMap(0x00001000, 0x00002000);
     selfMap(0x00007000, 0x00008000);
-    selfMap(0x0111b000, 0x0111c000); // runningTaskIndex var (with 40 in the end, not page aligned)
-    selfMap(0x0111d000, 0x0111e000); // totalTicks PIT var (with 70 in the end, not page aligned), also registered isrs (with 80 in the end)
-    selfMap(0x01410000, 0x01420000);
 }
 
 void initCr3() {

@@ -1,6 +1,6 @@
 #include <types.h>
 
-#define MAX_TASKS 2048
+#define MAX_TASKS 128
 #define STACK_SIZE 2048
 #define MAX_SLEEPING_TASKS MAX_TASKS
 

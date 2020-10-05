@@ -36,7 +36,6 @@ uint_32 getMs(uint_32 ticks) {
 }
 
 void timerISR(interrupt_frame *frame) {
-    print("AAAAAAAAA");
     totalTicks++;
     
     timeUpdate(getMsSinceBoot());
