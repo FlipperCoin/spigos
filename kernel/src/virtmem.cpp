@@ -113,7 +113,11 @@ void initTables() {
     uint_32 kernelStart = 0x00100000; // selfMap works because this addr is page aligned, otherwise need to improve selfMap impl
     uint_32 kernelEnd = 0x00F00000;
 
+    uint_32 dynamicPhysMemStart = 0x01000000;
+    uint_32 dynamicPhysMemEnd = 0x0C000000;
+
     selfMap(kernelStart, kernelEnd);
+    selfMap(dynamicPhysMemStart, dynamicPhysMemEnd);
     // TODO: cleaner design with this
     // maybe provide a kernel "allocate" method for specific addresses and sizes so drivers like the display driver will be able to allocate this address
     // 0xb8000 - hardware mapped IO for VGA, 0xb87d0 (so up to 0xb9000 for page alignment) is the last addr I believe the screen driver will use
