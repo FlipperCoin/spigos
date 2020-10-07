@@ -11,6 +11,8 @@ TCB *currentTaskTcb;
 TCB tasksTcb[MAX_TASKS];
 uint_32 tasksIndex;
 
+Mutex sleepingTasksMutex;
+
 extern "C" void switch_to_task(TCB *nextTask);
 
 void idleTask() {
@@ -29,6 +31,8 @@ void initKernelMain() {
 }
 
 void initializeMultitasking() {
+    sleepingTasksMutex = Mutex();
+    
     initKernelMain();
 
     createKernelTask(idleTask, "idle");
@@ -81,6 +85,7 @@ int createKernelTask(void (*start)(), char *name) {
     newTaskTcb->esp = &stacks[tasksIndex][STACK_SIZE - 6];
     newTaskTcb->state = TaskState::Ready;
     newTaskTcb->name = name; // TODO: change with dynamic mem
+    newTaskTcb->nextTask = nullptr;
 
     unlockScheduler();
     return 0;
@@ -89,20 +94,29 @@ int createKernelTask(void (*start)(), char *name) {
 // index to the last task, NOT to first open spot
 uint_32 runningTaskIndex = 0;
 
-void blockTask(bool shouldLock) {
-    if (shouldLock == true) 
-        lockScheduler();
+void blockTask(Semaphore *toRelease) {
+    lockScheduler();
 
+    setBlockedState(toRelease);
+    
+    unlockScheduler();
+}
+
+void setBlockedState(Semaphore *toRelease) {
     currentTaskTcb->cpuTime += getMs(getTicksSinceBoot() - currentTaskTcb->lastStartTimeTick);
     currentTaskTcb->state = TaskState::Paused;
+    if (toRelease != nullptr) toRelease->release();
     schedule();
-    unlockScheduler();
 }
 
 void unblockTask(TCB *task) {
     lockScheduler();
-    task->state = TaskState::Ready;
+    setUnblockedState(task);
     unlockScheduler();
+}
+
+void setUnblockedState(TCB *task) {
+    task->state = TaskState::Ready;
 }
 
 uint_32 timeSliceRemaining;
@@ -133,7 +147,7 @@ uint_32 sleepingTasksCount = 0;
 void timeUpdate(uint_32 time) {
     if (!multitaskingInitialized) return;
 
-    lockScheduler();
+    sleepingTasksMutex.wait();
     
     // Resume sleeping tasks, put into ready state
 
@@ -170,14 +184,16 @@ void timeUpdate(uint_32 time) {
         }
     }
 
+    sleepingTasksMutex.release();
+
     // Check time slice
 
     timeSliceRemaining--;
     if (timeSliceRemaining == 0) {
+        lockScheduler();
         schedule();
+        unlockScheduler();
     }
-
-    unlockScheduler();
 }
 
 TCB *getCurrentTask() {
@@ -185,25 +201,21 @@ TCB *getCurrentTask() {
 }
 
 void sleepUntil(uint_32 time) {
-    lockScheduler(); // TODO: should only lock timer with a mutex or something, then block task can always block scheduler
-
     uint_32 timeSinceBoot = getMsSinceBoot();
     if (time < timeSinceBoot) {
-        unlockScheduler();
         return;
     }
 
+    sleepingTasksMutex.wait();
     if (sleepingTasksCount == MAX_SLEEPING_TASKS) {
-        unlockScheduler();
         return;
     }
     
     sleepingTasks[sleepingTasksCount] = currentTaskTcb;
     sleepingTasks[sleepingTasksCount]->sleepExpiry = time;
-    sleepingTasksCount++;
+    sleepingTasksCount++;;
 
-    blockTask();
-    unlockScheduler();
+    blockTask(&sleepingTasksMutex);
 }
 
 void sleep(uint_32 ms) {

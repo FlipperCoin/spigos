@@ -12,6 +12,8 @@ static size_t readBufferIndex;
 
 static uint_8 sectorsToRead;
 
+static Mutex ataMutex;
+
 void readSector();
 void readSector(uint_16 *buffer);
 
@@ -71,7 +73,7 @@ void identifyDrive() {
 }
 
 void read(uint_32 lbaBlock, uint_8 sectorCount, uint_8 *buffer) {
-    lockScheduler();
+    ataMutex.wait();
 
     readBuffer = (uint_16*)buffer;
     readBufferIndex = 0;
@@ -94,7 +96,7 @@ void read(uint_32 lbaBlock, uint_8 sectorCount, uint_8 *buffer) {
     waitingTask = getCurrentTask();
     blockTask();
 
-    unlockScheduler();
+    ataMutex.release();
 }
 
 void readSector(uint_16 *buffer) {
@@ -131,6 +133,8 @@ void driveISR(interrupt_frame *frame) {
 }
 
 void initAta() {
+    ataMutex = Mutex();
+
     uint_8 status = portByteIn(ALT_STATUS_REG);
     if (status == 0xFF) {
         println("Floating bus.");

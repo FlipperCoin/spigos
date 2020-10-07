@@ -7,6 +7,7 @@
 #include <types.h>
 #include <memory.h>
 #include <tasks.h>
+#include <sync.h>
 
 namespace ScanCodes {
     uint_8 PrevTrackPressed[] = {0xE0, 0x10};
@@ -419,17 +420,21 @@ static size_t eventsIndex;
 
 TCB *waitingTask;
 
+Semaphore eventsMutex = {10};
+
 KeyEvent readKey() {
-    lockScheduler(); // TODO: should be lock keyboard with a mutex or something, then return lock scheduler to "blockTask"
+    eventsMutex.wait();
 
     if (eventsIndex == 0) {
-        // TODO: only lock scheduler here or lock inside block task
         waitingTask = getCurrentTask();
-        blockTask();
+        blockTask(&eventsMutex);
+        
+        eventsMutex.wait();
     }
 
     KeyEvent event = eventsBuffer[--eventsIndex];
-    unlockScheduler(); // TODO: should be unlock keyboard
+    eventsMutex.release();
+    
     return event;
 }
 
@@ -622,14 +627,14 @@ void keyboardISR(interrupt_frame *frame) {
     KeyCode keyCode;
     KeyEventType type;
     if (tryResolveScanCode(key, &keyCode, &type)) {
-        lockScheduler(); // TODO: lock keyboard not scheduler
+        eventsMutex.wait();
         addKeyEvent(keyCode, type);
 
         if (waitingTask != nullptr) {
             unblockTask(waitingTask);
             waitingTask = nullptr;
         }
-        unlockScheduler();
+        eventsMutex.release();
     }
     
     sendEOI(false); 
@@ -706,6 +711,8 @@ void initKeyCodeToAscii() {
 }
 
 void initKeyboardDriver() {
+    eventsMutex = Mutex();
+    
     initKeyCodeToAscii();
 
     registerInterrupt(0x21, keyboardISR, Gate::interrupt);

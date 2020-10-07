@@ -14,4 +14,4 @@ out:
 	mkdir -p $@/obj/
 
 out/obj/%.o: src/%.cpp $(headers) | out
-	g++ -o $@ -m32 -ffreestanding -c -fno-pie $(addprefix -I ,$(includes)) $<
+	g++ -g -o $@ -m32 -ffreestanding -c -fno-pie $(addprefix -I ,$(includes)) $<
