@@ -15,6 +15,8 @@ Mutex sleepingTasksMutex;
 
 extern "C" void switch_to_task(TCB *nextTask);
 
+void wakeupRoutine();
+
 void idleTask() {
     while (true) { 
         // TODO: add HLT support, preempt idle task
@@ -36,6 +38,7 @@ void initializeMultitasking() {
     initKernelMain();
 
     createKernelTask(idleTask, "idle");
+    createKernelTask(wakeupRoutine, "wakeup");
 
     multitaskingInitialized = true;
 }
@@ -123,9 +126,9 @@ uint_32 timeSliceRemaining;
 
 void schedule() {
     uint_32 ticks = getTicksSinceBoot();
+    currentTaskTcb->cpuTime += getMs(ticks - currentTaskTcb->lastStartTimeTick);
 
     if (currentTaskTcb->state == TaskState::Running) {
-        currentTaskTcb->cpuTime += getMs(ticks - currentTaskTcb->lastStartTimeTick);
         currentTaskTcb->state = TaskState::Ready;
     }
     
@@ -144,48 +147,59 @@ void schedule() {
 TCB *sleepingTasks[MAX_SLEEPING_TASKS];
 uint_32 sleepingTasksCount = 0;
 
+void wakeupRoutine() {
+    while(true) {
+        sleepingTasksMutex.wait();
+        
+        // Resume sleeping tasks, put into ready state
+
+        uint_32 time = getMsSinceBoot();
+        uint_32 removedCount = 0;
+        for (size_t i = 0; i < sleepingTasksCount; i++)
+        {
+            TCB *task = sleepingTasks[i];
+            if (task->state == TaskState::Paused && task->sleepExpiry < time) {
+                unblockTask(task);
+                sleepingTasks[i] = nullptr;
+                removedCount++;
+            }
+        }
+        
+        // Rearrange sleeping tasks array
+        if (removedCount != 0) {
+            uint_32 newSleepingTasksCount = sleepingTasksCount - removedCount;
+            
+            int j = 0;
+            int i = 0;
+            while (i < newSleepingTasksCount && j < sleepingTasksCount) {    
+                while (i < newSleepingTasksCount && sleepingTasks[i] != nullptr) {
+                    i++;
+                }
+
+                if (j == 0) j = i;
+                
+                while (j < sleepingTasksCount && sleepingTasks[j] == nullptr) {
+                    j++;
+                }
+                
+                sleepingTasks[i++] = sleepingTasks[j];
+                sleepingTasks[j++] = nullptr;
+            }
+            
+            sleepingTasksCount = newSleepingTasksCount;
+        }
+
+        sleepingTasksMutex.release();
+
+        lockScheduler();
+        schedule();
+        unlockScheduler();
+    }
+}
+
 void timeUpdate(uint_32 time) {
     if (!multitaskingInitialized) return;
-
-    sleepingTasksMutex.wait();
     
-    // Resume sleeping tasks, put into ready state
-
-    uint_32 removedCount = 0;
-    for (size_t i = 0; i < sleepingTasksCount; i++)
-    {
-        TCB *task = sleepingTasks[i];
-        if (task->state == TaskState::Paused && task->sleepExpiry < time) {
-            unblockTask(task);
-            sleepingTasks[i] = nullptr;
-            removedCount++;
-        }
-    }
-    
-    // Rearrange sleeping tasks array
-    if (removedCount != 0) {
-        uint_32 newSleepingTasksCount = sleepingTasksCount - removedCount;
-        
-        int j = 0;
-        int i = 0;
-        while (i < newSleepingTasksCount && j < sleepingTasksCount) {    
-            while (i < newSleepingTasksCount && sleepingTasks[i] != nullptr) {
-                i++;
-            }
-
-            if (j == 0) j = i;
-            
-            while (j < sleepingTasksCount && sleepingTasks[j] == nullptr) {
-                j++;
-            }
-            
-            sleepingTasks[i++] = sleepingTasks[j];
-            sleepingTasks[j++] = nullptr;
-        }
-    }
-
-    sleepingTasksMutex.release();
-
     // Check time slice
 
     timeSliceRemaining--;
@@ -208,6 +222,7 @@ void sleepUntil(uint_32 time) {
 
     sleepingTasksMutex.wait();
     if (sleepingTasksCount == MAX_SLEEPING_TASKS) {
+        sleepingTasksMutex.release();
         return;
     }
     
