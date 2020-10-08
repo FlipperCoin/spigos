@@ -21,6 +21,7 @@ extern "C" int KernelMain() {
     println("Enabling Virtual Memory...");
     initPhysMemManagement();
     enableVirtualMemory();
+    dynmemInit();
 
     println("Initializing PIC...");
     initPIC();
@@ -45,7 +46,7 @@ extern "C" int KernelMain() {
     println();
     println("Done.");
     println();
-
+    
     // === 
 
     shell();
