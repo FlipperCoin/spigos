@@ -14,8 +14,6 @@ static size_t allocations = 0;
 
 static Mutex recordLock;
 
-// TODO: mutex for multi task safety
-
 void * kmalloc(size_t size) {
     recordLock.wait();
     if (allocations == MAX_ALLOCATIONS) {
