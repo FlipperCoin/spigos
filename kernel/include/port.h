@@ -1,5 +1,9 @@
-unsigned char portByteIn(unsigned short port);
-void portByteOut(unsigned short port, unsigned char data);
+#pragma once
 
-unsigned short portWordIn(unsigned short port);
-void portWordOut(unsigned short port, unsigned short data);
+#include <types.h>
+
+uint_8 portByteIn(uint_16 port);
+void portByteOut(uint_16 port, uint_8 data);
+
+uint_16 portWordIn(uint_16 port);
+void portWordOut(uint_16 port, uint_16 data);

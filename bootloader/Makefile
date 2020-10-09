@@ -13,7 +13,7 @@ out/bin/bootable.img: out/bin/boot_sect.bin out/bin/bootloader.bin out/bin/bootl
 	cat $^ > $@
 
 out/bin/boot_sect.bin: src/*.asm src/pm/*.asm src/rm/io/*.asm | out
-	nasm src/boot_sect.asm -i src -f bin -o $@
+	nasm src/boot_sect.asm -i src/ -f bin -o $@
 
 out/bin/bootloader_filler.bin: filler.sh out/bin/bootloader.bin | out
 	./filler.sh $@ $(shell echo $$((512*54))) out/bin/bootloader.bin

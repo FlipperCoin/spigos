@@ -1,4 +1,3 @@
-#include <types.h>
 #include <port.h>
 
 uint_8 portByteIn(uint_16 port) {
