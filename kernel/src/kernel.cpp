@@ -26,6 +26,9 @@ extern "C" int KernelMain() {
     println("Initializing PIC...");
     initPIC();
     
+    println("Initializing Multitasking...");
+    initializeMultitasking();
+
     println("Initializing Drivers...");
     initKeyboardDriver();
     initAta();
@@ -39,9 +42,6 @@ extern "C" int KernelMain() {
 
     println("Enabling Hardware IRQs...");
     enableHardwareInterrupts();
-
-    println("Initializing Multitasking...");
-    initializeMultitasking();
 
     println();
     println("Done.");

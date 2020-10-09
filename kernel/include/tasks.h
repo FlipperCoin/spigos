@@ -9,7 +9,7 @@
 #define MAX_SLEEPING_TASKS MAX_TASKS
 
 void initializeMultitasking();
-int createKernelTask(void (*start)(), char *name = "");
+TCB* createKernelTask(void (*start)(), char *name = "", uint_8 priority = 1);
 
 void lockScheduler();
 void unlockScheduler();

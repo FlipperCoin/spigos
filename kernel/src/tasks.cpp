@@ -28,6 +28,7 @@ void initKernelMain() {
     tasksTcb[0].state = TaskState::Running;
     tasksTcb[0].lastStartTimeTick = getTicksSinceBoot();
     tasksTcb[0].name = "kernel_main";
+    tasksTcb[0].priority = 1;
     tasksIndex = 0;
     currentTaskTcb = &tasksTcb[0];
 }
@@ -37,7 +38,7 @@ void initializeMultitasking() {
     
     initKernelMain();
 
-    createKernelTask(idleTask, "idle");
+    createKernelTask(idleTask, "idle", 255);
     createKernelTask(wakeupRoutine, "wakeup");
 
     multitaskingInitialized = true;
@@ -69,10 +70,10 @@ void kernelTaskExit() {
 // First stack is a fake and not used because the kernel already has its stack setup from boot
 uint_32 stacks[MAX_TASKS][STACK_SIZE];
 
-int createKernelTask(void (*start)(), char *name) {
+TCB* createKernelTask(void (*start)(), char *name, uint_8 priority) {
     lockScheduler();
 
-    if (tasksIndex == (MAX_TASKS - 1)) return -1;
+    if (tasksIndex == (MAX_TASKS - 1)) return nullptr;
 
     tasksIndex++;
 
@@ -89,9 +90,10 @@ int createKernelTask(void (*start)(), char *name) {
     newTaskTcb->state = TaskState::Ready;
     newTaskTcb->name = name; // TODO: change with dynamic mem
     newTaskTcb->nextTask = nullptr;
+    newTaskTcb->priority = priority;
 
     unlockScheduler();
-    return 0;
+    return newTaskTcb;
 }
 
 // index to the last task, NOT to first open spot
@@ -124,6 +126,10 @@ void setUnblockedState(TCB *task) {
 
 uint_32 timeSliceRemaining;
 
+uint_32 priorityToTimeSlice(uint_32 priority) {
+    return priority == 255 ? 1 : TIME_SLICE_LENGTH;
+}
+
 void schedule() {
     uint_32 ticks = getTicksSinceBoot();
     currentTaskTcb->cpuTime += getMs(ticks - currentTaskTcb->lastStartTimeTick);
@@ -140,7 +146,7 @@ void schedule() {
     
     potentialTask->state = TaskState::Running;
     potentialTask->lastStartTimeTick = ticks;
-    timeSliceRemaining = TIME_SLICE_LENGTH;
+    timeSliceRemaining = priorityToTimeSlice(potentialTask->priority);
     switch_to_task(potentialTask);
 }
 

@@ -18,4 +18,5 @@ typedef struct TCB {
     char *name;
     uint_32 sleepExpiry;
     TCB *nextTask; // used by other components to easily track paused tasks
+    uint_8 priority;
 } TCB;

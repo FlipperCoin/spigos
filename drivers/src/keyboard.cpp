@@ -622,20 +622,47 @@ void addKeyEvent(KeyCode keyCode, KeyEventType eventType) {
     eventsBuffer[eventsIndex++] = newEvent;
 }
 
-void keyboardISR(interrupt_frame *frame) {
-    uint_8 key = portByteIn(PS2_DATA_PORT);
-    KeyCode keyCode;
-    KeyEventType type;
-    if (tryResolveScanCode(key, &keyCode, &type)) {
-        eventsMutex.wait();
-        addKeyEvent(keyCode, type);
+bool keypressFlag;
 
-        if (waitingTask != nullptr) {
-            unblockTask(waitingTask);
-            waitingTask = nullptr;
+void keyboardDriverTask() {
+    while(true) {
+        
+        while(true) {
+            disableInterrupts();
+            if (!keypressFlag) {
+                setBlockedState();
+                
+                enableInterrupts();
+            } else {
+                keypressFlag = false;
+                break;
+            }
         }
-        eventsMutex.release();
+        enableInterrupts();
+
+        uint_8 key = portByteIn(PS2_DATA_PORT);
+        KeyCode keyCode;
+        KeyEventType type;
+        if (tryResolveScanCode(key, &keyCode, &type)) {
+            eventsMutex.wait();
+            addKeyEvent(keyCode, type);
+
+            if (waitingTask != nullptr) {
+                unblockTask(waitingTask);
+                waitingTask = nullptr;
+            }
+            eventsMutex.release();
+        }
     }
+}
+
+TCB* keyboardDriverTaskTcb;
+
+void keyboardISR(interrupt_frame *frame) {
+    disableInterrupts();
+    keypressFlag=true;
+    setUnblockedState(keyboardDriverTaskTcb);
+    enableInterrupts();
     
     sendEOI(false); 
 }
@@ -712,8 +739,10 @@ void initKeyCodeToAscii() {
 
 void initKeyboardDriver() {
     eventsMutex = Mutex();
-    
+    keypressFlag = false;
     initKeyCodeToAscii();
+
+    keyboardDriverTaskTcb = createKernelTask(keyboardDriverTask, "keyboard_driver");
 
     registerInterrupt(0x21, keyboardISR, Gate::interrupt);
 }
