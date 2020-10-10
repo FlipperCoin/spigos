@@ -32,7 +32,7 @@ uint_32 disableInterruptsCounter = 0;
 void enableInterrupts() {
     if (disableInterrupts > 0)
         disableInterruptsCounter--;
-        
+    
     if (disableInterruptsCounter == 0) {
         __asm__ (
             "sti"

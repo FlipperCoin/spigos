@@ -6,7 +6,6 @@ EXTERN currentTaskTcb
 struc TCB 
 
   .esp:     resd   1 
-  .state:   resb    1
 
 endstruc
 

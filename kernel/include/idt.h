@@ -4,6 +4,9 @@
 
 #define IDT_ENTRIES_COUNT 256
 
+#define KERNEL_RING 0
+#define USER_RING 3
+
 enum Gate {
     task = 0x05,
     interrupt = 0x0E,

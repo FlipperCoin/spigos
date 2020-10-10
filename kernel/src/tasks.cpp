@@ -96,6 +96,8 @@ TCB* createKernelTask(void (*start)(), char *name, uint_8 priority) {
     return newTaskTcb;
 }
 
+
+
 // index to the last task, NOT to first open spot
 uint_32 runningTaskIndex = 0;
 
