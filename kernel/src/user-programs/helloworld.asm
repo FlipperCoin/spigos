@@ -1,7 +1,6 @@
 SECTION .TEXT
     GLOBAL hello_world
 
-
 hello_world:
     jmp main
 
