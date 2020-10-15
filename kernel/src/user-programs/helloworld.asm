@@ -3,12 +3,14 @@ SECTION .TEXT
 
 
 hello_world:
-    jmp 0x12
+    jmp main
 
+msg:
     db "Hello World!",0x0a,0
 
+main:
     mov ecx, 13 ; size
-    mov ebx, 0x4005 ; buf
+    mov ebx, 0x4000+msg ; buf
     mov eax, 4 ; write
     int 0x80
 
@@ -16,4 +18,4 @@ hello_world:
     mov eax, 162 ; sleep
     int 0x80
 
-    jmp -0x31
+    jmp main
