@@ -5,6 +5,7 @@
 #include <dynmem.h>
 #include <virtmem.h>
 #include <memory.h>
+#include <pic.h>
 
 #define TIME_SLICE_LENGTH 5;
 
@@ -287,8 +288,12 @@ void timeUpdate(uint_32 time) {
     timeSliceRemaining--;
     if (timeSliceRemaining == 0) {
         lockScheduler();
+        sendEOI(false);
         schedule();
         unlockScheduler();
+    }
+    else {
+        sendEOI(false);
     }
 }
 

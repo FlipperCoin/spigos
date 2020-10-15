@@ -40,7 +40,7 @@ void timerISR(InterruptFrame *frame) {
     
     timeUpdate(getMsSinceBoot());
 
-    sendEOI(false);
+    // Not sending EOI cause time update did it for us (Temporary solution)
 }
 
 void setDivider(uint_16 divider) {
