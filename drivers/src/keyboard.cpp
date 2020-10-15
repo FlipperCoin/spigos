@@ -658,7 +658,7 @@ void keyboardDriverTask() {
 
 TCB* keyboardDriverTaskTcb;
 
-void keyboardISR(interrupt_frame *frame) {
+void keyboardISR(InterruptFrame *frame) {
     disableInterrupts();
     keypressFlag=true;
     setUnblockedState(keyboardDriverTaskTcb);

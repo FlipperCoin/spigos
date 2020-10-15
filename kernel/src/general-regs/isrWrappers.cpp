@@ -1,1803 +1,1803 @@
 #include <interrupt.h>
 
-extern void (*registeredIsrs[IDT_ENTRIES_COUNT])(interrupt_frame*);
+extern void (*registeredIsrs[IDT_ENTRIES_COUNT])(InterruptFrame*);
 
 // NOTE: leaving end of interrupt signal to actual isrs, 
 // which might be problematic because it postpones iret.
 
 __attribute__((interrupt))
 void
-isr0(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[0];
+isr0(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[0];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr1(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[1];
+isr1(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[1];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr2(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[2];
+isr2(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[2];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr3(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[3];
+isr3(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[3];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr4(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[4];
+isr4(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[4];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr5(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[5];
+isr5(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[5];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr6(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[6];
+isr6(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[6];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr7(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[7];
+isr7(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[7];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr8(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[8];
+isr8(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[8];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr9(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[9];
+isr9(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[9];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr10(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[10];
+isr10(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[10];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr11(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[11];
+isr11(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[11];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr12(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[12];
+isr12(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[12];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr13(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[13];
+isr13(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[13];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr14(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[14];
+isr14(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[14];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr15(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[15];
+isr15(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[15];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr16(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[16];
+isr16(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[16];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr17(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[17];
+isr17(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[17];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr18(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[18];
+isr18(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[18];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr19(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[19];
+isr19(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[19];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr20(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[20];
+isr20(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[20];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr21(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[21];
+isr21(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[21];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr22(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[22];
+isr22(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[22];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr23(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[23];
+isr23(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[23];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr24(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[24];
+isr24(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[24];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr25(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[25];
+isr25(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[25];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr26(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[26];
+isr26(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[26];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr27(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[27];
+isr27(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[27];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr28(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[28];
+isr28(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[28];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr29(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[29];
+isr29(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[29];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr30(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[30];
+isr30(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[30];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr31(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[31];
+isr31(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[31];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr32(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[32];
+isr32(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[32];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr33(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[33];
+isr33(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[33];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr34(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[34];
+isr34(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[34];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr35(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[35];
+isr35(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[35];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr36(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[36];
+isr36(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[36];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr37(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[37];
+isr37(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[37];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr38(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[38];
+isr38(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[38];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr39(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[39];
+isr39(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[39];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr40(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[40];
+isr40(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[40];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr41(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[41];
+isr41(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[41];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr42(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[42];
+isr42(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[42];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr43(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[43];
+isr43(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[43];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr44(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[44];
+isr44(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[44];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr45(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[45];
+isr45(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[45];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr46(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[46];
+isr46(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[46];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr47(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[47];
+isr47(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[47];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr48(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[48];
+isr48(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[48];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr49(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[49];
+isr49(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[49];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr50(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[50];
+isr50(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[50];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr51(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[51];
+isr51(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[51];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr52(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[52];
+isr52(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[52];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr53(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[53];
+isr53(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[53];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr54(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[54];
+isr54(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[54];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr55(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[55];
+isr55(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[55];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr56(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[56];
+isr56(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[56];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr57(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[57];
+isr57(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[57];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr58(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[58];
+isr58(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[58];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr59(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[59];
+isr59(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[59];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr60(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[60];
+isr60(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[60];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr61(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[61];
+isr61(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[61];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr62(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[62];
+isr62(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[62];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr63(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[63];
+isr63(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[63];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr64(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[64];
+isr64(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[64];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr65(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[65];
+isr65(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[65];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr66(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[66];
+isr66(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[66];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr67(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[67];
+isr67(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[67];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr68(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[68];
+isr68(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[68];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr69(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[69];
+isr69(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[69];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr70(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[70];
+isr70(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[70];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr71(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[71];
+isr71(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[71];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr72(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[72];
+isr72(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[72];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr73(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[73];
+isr73(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[73];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr74(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[74];
+isr74(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[74];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr75(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[75];
+isr75(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[75];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr76(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[76];
+isr76(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[76];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr77(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[77];
+isr77(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[77];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr78(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[78];
+isr78(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[78];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr79(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[79];
+isr79(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[79];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr80(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[80];
+isr80(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[80];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr81(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[81];
+isr81(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[81];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr82(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[82];
+isr82(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[82];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr83(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[83];
+isr83(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[83];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr84(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[84];
+isr84(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[84];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr85(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[85];
+isr85(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[85];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr86(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[86];
+isr86(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[86];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr87(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[87];
+isr87(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[87];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr88(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[88];
+isr88(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[88];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr89(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[89];
+isr89(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[89];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr90(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[90];
+isr90(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[90];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr91(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[91];
+isr91(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[91];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr92(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[92];
+isr92(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[92];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr93(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[93];
+isr93(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[93];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr94(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[94];
+isr94(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[94];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr95(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[95];
+isr95(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[95];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr96(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[96];
+isr96(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[96];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr97(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[97];
+isr97(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[97];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr98(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[98];
+isr98(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[98];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr99(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[99];
+isr99(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[99];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr100(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[100];
+isr100(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[100];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr101(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[101];
+isr101(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[101];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr102(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[102];
+isr102(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[102];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr103(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[103];
+isr103(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[103];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr104(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[104];
+isr104(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[104];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr105(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[105];
+isr105(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[105];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr106(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[106];
+isr106(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[106];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr107(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[107];
+isr107(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[107];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr108(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[108];
+isr108(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[108];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr109(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[109];
+isr109(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[109];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr110(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[110];
+isr110(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[110];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr111(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[111];
+isr111(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[111];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr112(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[112];
+isr112(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[112];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr113(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[113];
+isr113(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[113];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr114(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[114];
+isr114(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[114];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr115(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[115];
+isr115(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[115];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr116(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[116];
+isr116(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[116];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr117(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[117];
+isr117(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[117];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr118(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[118];
+isr118(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[118];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr119(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[119];
+isr119(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[119];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr120(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[120];
+isr120(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[120];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr121(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[121];
+isr121(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[121];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr122(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[122];
+isr122(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[122];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr123(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[123];
+isr123(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[123];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr124(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[124];
+isr124(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[124];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr125(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[125];
+isr125(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[125];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr126(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[126];
+isr126(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[126];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr127(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[127];
+isr127(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[127];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr128(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[128];
+isr128(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[128];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr129(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[129];
+isr129(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[129];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr130(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[130];
+isr130(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[130];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr131(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[131];
+isr131(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[131];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr132(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[132];
+isr132(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[132];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr133(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[133];
+isr133(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[133];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr134(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[134];
+isr134(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[134];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr135(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[135];
+isr135(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[135];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr136(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[136];
+isr136(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[136];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr137(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[137];
+isr137(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[137];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr138(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[138];
+isr138(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[138];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr139(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[139];
+isr139(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[139];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr140(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[140];
+isr140(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[140];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr141(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[141];
+isr141(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[141];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr142(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[142];
+isr142(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[142];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr143(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[143];
+isr143(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[143];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr144(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[144];
+isr144(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[144];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr145(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[145];
+isr145(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[145];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr146(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[146];
+isr146(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[146];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr147(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[147];
+isr147(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[147];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr148(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[148];
+isr148(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[148];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr149(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[149];
+isr149(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[149];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr150(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[150];
+isr150(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[150];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr151(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[151];
+isr151(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[151];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr152(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[152];
+isr152(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[152];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr153(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[153];
+isr153(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[153];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr154(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[154];
+isr154(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[154];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr155(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[155];
+isr155(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[155];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr156(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[156];
+isr156(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[156];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr157(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[157];
+isr157(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[157];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr158(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[158];
+isr158(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[158];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr159(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[159];
+isr159(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[159];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr160(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[160];
+isr160(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[160];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr161(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[161];
+isr161(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[161];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr162(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[162];
+isr162(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[162];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr163(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[163];
+isr163(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[163];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr164(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[164];
+isr164(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[164];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr165(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[165];
+isr165(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[165];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr166(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[166];
+isr166(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[166];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr167(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[167];
+isr167(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[167];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr168(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[168];
+isr168(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[168];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr169(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[169];
+isr169(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[169];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr170(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[170];
+isr170(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[170];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr171(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[171];
+isr171(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[171];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr172(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[172];
+isr172(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[172];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr173(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[173];
+isr173(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[173];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr174(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[174];
+isr174(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[174];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr175(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[175];
+isr175(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[175];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr176(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[176];
+isr176(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[176];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr177(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[177];
+isr177(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[177];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr178(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[178];
+isr178(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[178];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr179(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[179];
+isr179(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[179];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr180(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[180];
+isr180(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[180];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr181(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[181];
+isr181(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[181];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr182(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[182];
+isr182(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[182];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr183(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[183];
+isr183(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[183];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr184(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[184];
+isr184(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[184];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr185(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[185];
+isr185(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[185];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr186(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[186];
+isr186(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[186];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr187(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[187];
+isr187(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[187];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr188(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[188];
+isr188(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[188];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr189(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[189];
+isr189(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[189];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr190(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[190];
+isr190(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[190];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr191(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[191];
+isr191(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[191];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr192(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[192];
+isr192(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[192];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr193(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[193];
+isr193(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[193];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr194(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[194];
+isr194(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[194];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr195(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[195];
+isr195(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[195];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr196(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[196];
+isr196(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[196];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr197(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[197];
+isr197(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[197];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr198(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[198];
+isr198(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[198];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr199(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[199];
+isr199(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[199];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr200(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[200];
+isr200(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[200];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr201(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[201];
+isr201(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[201];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr202(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[202];
+isr202(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[202];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr203(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[203];
+isr203(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[203];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr204(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[204];
+isr204(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[204];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr205(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[205];
+isr205(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[205];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr206(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[206];
+isr206(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[206];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr207(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[207];
+isr207(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[207];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr208(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[208];
+isr208(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[208];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr209(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[209];
+isr209(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[209];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr210(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[210];
+isr210(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[210];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr211(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[211];
+isr211(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[211];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr212(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[212];
+isr212(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[212];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr213(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[213];
+isr213(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[213];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr214(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[214];
+isr214(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[214];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr215(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[215];
+isr215(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[215];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr216(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[216];
+isr216(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[216];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr217(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[217];
+isr217(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[217];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr218(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[218];
+isr218(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[218];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr219(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[219];
+isr219(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[219];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr220(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[220];
+isr220(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[220];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr221(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[221];
+isr221(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[221];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr222(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[222];
+isr222(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[222];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr223(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[223];
+isr223(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[223];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr224(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[224];
+isr224(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[224];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr225(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[225];
+isr225(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[225];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr226(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[226];
+isr226(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[226];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr227(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[227];
+isr227(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[227];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr228(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[228];
+isr228(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[228];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr229(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[229];
+isr229(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[229];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr230(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[230];
+isr230(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[230];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr231(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[231];
+isr231(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[231];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr232(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[232];
+isr232(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[232];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr233(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[233];
+isr233(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[233];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr234(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[234];
+isr234(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[234];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr235(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[235];
+isr235(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[235];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr236(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[236];
+isr236(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[236];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr237(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[237];
+isr237(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[237];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr238(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[238];
+isr238(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[238];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr239(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[239];
+isr239(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[239];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr240(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[240];
+isr240(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[240];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr241(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[241];
+isr241(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[241];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr242(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[242];
+isr242(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[242];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr243(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[243];
+isr243(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[243];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr244(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[244];
+isr244(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[244];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr245(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[245];
+isr245(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[245];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr246(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[246];
+isr246(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[246];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr247(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[247];
+isr247(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[247];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr248(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[248];
+isr248(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[248];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr249(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[249];
+isr249(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[249];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr250(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[250];
+isr250(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[250];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr251(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[251];
+isr251(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[251];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr252(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[252];
+isr252(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[252];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr253(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[253];
+isr253(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[253];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr254(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[254];
+isr254(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[254];
     if (isr != nullptr) isr(frame);
 }
 
 __attribute__((interrupt))
 void
-isr255(interrupt_frame *frame) {
-    void (*isr)(interrupt_frame*) = registeredIsrs[255];
+isr255(InterruptFrame *frame) {
+    void (*isr)(InterruptFrame*) = registeredIsrs[255];
     if (isr != nullptr) isr(frame);
 }
 
-void (*isrWrappers[IDT_ENTRIES_COUNT])(interrupt_frame*) = {
+void (*isrWrappers[IDT_ENTRIES_COUNT])(InterruptFrame*) = {
     isr0,
     isr1,
     isr2,

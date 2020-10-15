@@ -4,70 +4,84 @@
 
 __attribute__((interrupt))
 void
-divByZero(interrupt_frame *frame){println("exception");while(true){}}
+divByZero(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-singleStep(interrupt_frame *frame){println("exception");while(true){}}
+singleStep(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-NMI(interrupt_frame *frame){println("exception");while(true){}}
+NMI(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-breakpoint(interrupt_frame *frame){println("exception");while(true){}}
+breakpoint(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-overflow(interrupt_frame *frame){println("exception");while(true){}}
+overflow(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-bounds(interrupt_frame *frame){println("exception");while(true){}}
+bounds(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-invalidOpcode(interrupt_frame *frame){println("exception");while(true){}}
+invalidOpcode(InterruptFrame *frame) {
+    print("Invalid Opcode. Instruction: ");
+    printHex(frame->eip);
+    println();
+    while(true){}
+}
 
 __attribute__((interrupt))
 void
-coprocessorNotAvailable(interrupt_frame *frame){println("exception");while(true){}}
+coprocessorNotAvailable(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-doubleFault(interrupt_frame *frame){println("exception");while(true){}}
+doubleFault(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-coprocessorSegmentOverrun(interrupt_frame *frame){println("exception");while(true){}}
+coprocessorSegmentOverrun(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-invalidTaskStateSegment(interrupt_frame *frame){println("exception");while(true){}}
+invalidTaskStateSegment(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-segmentNotPresent(interrupt_frame *frame){println("exception");while(true){}}
+segmentNotPresent(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-stackFault(interrupt_frame *frame){println("exception");while(true){}}
+stackFault(InterruptFrame *frame){println("exception");while(true){}}
 
 // TODO: remove err from stack (poped)
 
 __attribute__((interrupt))
 void
-generalProtectionFault(interrupt_frame *frame, uint_32 error){println("exception");while(true){}}
+generalProtectionFault(InterruptFrame *frame, uint_32 error) { 
+    print("General Protection Fault. Error (segment selector if none 0): ");
+    printHex(error);
+    print(", instruction: ");
+    printHex(frame->eip);
+    println();
+    while(true){}
+}
 
 __attribute__((interrupt))
 void
-pageFault(interrupt_frame *frame, uint_32 error) {
+pageFault(InterruptFrame *frame, uint_32 error) {
     
     print("Page Fault. Error: ");
     printHex(error);
     print(", Virtual Address: ");
     printHex(getCR2());
+    print(", Instruction: ");
+    printHex(frame->eip);
     println();
     
     while(true){}
@@ -75,31 +89,31 @@ pageFault(interrupt_frame *frame, uint_32 error) {
 
 __attribute__((interrupt))
 void
-reserved(interrupt_frame *frame){println("exception");while(true){}}
+reserved(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-mathFault(interrupt_frame *frame){println("exception");while(true){}}
+mathFault(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-alignmentCheck(interrupt_frame *frame){println("exception");while(true){}}
+alignmentCheck(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-machineCheck(interrupt_frame *frame){println("exception");while(true){}}
+machineCheck(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-SIMDFloatingPointException(interrupt_frame *frame){println("exception");while(true){}}
+SIMDFloatingPointException(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-virtualizationException(interrupt_frame *frame){println("exception");while(true){}}
+virtualizationException(InterruptFrame *frame){println("exception");while(true){}}
 
 __attribute__((interrupt))
 void
-controlProtectionException(interrupt_frame *frame){println("exception");while(true){}}
+controlProtectionException(InterruptFrame *frame){println("exception");while(true){}}
 
 void registerExceptions() {
     registerRawInterrupt(0x00, divByZero, Gate::trap);
@@ -115,8 +129,8 @@ void registerExceptions() {
     registerRawInterrupt(0x0A, invalidTaskStateSegment, Gate::trap);
     registerRawInterrupt(0x0B, segmentNotPresent, Gate::trap);
     registerRawInterrupt(0x0C, stackFault, Gate::trap);
-    registerRawInterrupt(0x0D, (void(*)(interrupt_frame*))generalProtectionFault, Gate::trap);
-    registerRawInterrupt(0x0E, (void(*)(interrupt_frame*))pageFault, Gate::trap);
+    registerRawInterrupt(0x0D, (void(*)(InterruptFrame*))generalProtectionFault, Gate::trap);
+    registerRawInterrupt(0x0E, (void(*)(InterruptFrame*))pageFault, Gate::trap);
     registerRawInterrupt(0x0F, reserved, Gate::trap);
     registerRawInterrupt(0x10, mathFault, Gate::trap);
     registerRawInterrupt(0x11, alignmentCheck, Gate::trap);

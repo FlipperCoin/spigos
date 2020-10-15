@@ -4,12 +4,13 @@
 #include <tcb.h>
 #include <sync.h>
 
-#define MAX_TASKS 128
-#define STACK_SIZE 2048
+#define MAX_TASKS 64
+#define STACK_SIZE 512
 #define MAX_SLEEPING_TASKS MAX_TASKS
 
 void initializeMultitasking();
 TCB* createKernelTask(void (*start)(), char *name = "", uint_8 priority = 1);
+TCB* createUserTask();
 
 void lockScheduler();
 void unlockScheduler();

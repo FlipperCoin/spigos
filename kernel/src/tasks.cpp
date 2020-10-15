@@ -2,6 +2,9 @@
 #include <pit.h>
 #include <interrupt.h>
 #include <screen.h>
+#include <dynmem.h>
+#include <virtmem.h>
+#include <memory.h>
 
 #define TIME_SLICE_LENGTH 5;
 
@@ -26,6 +29,7 @@ void idleTask() {
 void initKernelMain() {
     // Not initializing ESP because it won't help in any way
     tasksTcb[0].state = TaskState::Running;
+    tasksTcb[0].cr3 = (uint_32)getKernelPageDirectory();
     tasksTcb[0].lastStartTimeTick = getTicksSinceBoot();
     tasksTcb[0].name = "kernel_main";
     tasksTcb[0].priority = 1;
@@ -52,6 +56,30 @@ void unlockScheduler() {
     enableInterrupts();
 }
 
+void userTaskStart() {
+    unlockScheduler();
+    
+    asm volatile("  \
+     cli; \
+     mov $0x23, %ax; \
+     mov %ax, %ds; \
+     mov %ax, %es; \
+     mov %ax, %fs; \
+     mov %ax, %gs; \
+                   \
+     mov %esp, %eax; \
+     pushl $0x23; \
+     pushl %eax; \
+     pushf; \
+     popl %eax; \
+     or $0x200, %eax; \
+     pushl %eax; \
+     pushl $0x1B; \
+     push $0x4000; \
+     iret; \
+     ");
+}
+
 void kernelTaskStart(void (*start)()) {
     unlockScheduler();
     
@@ -68,7 +96,7 @@ void kernelTaskExit() {
 }
 
 // First stack is a fake and not used because the kernel already has its stack setup from boot
-uint_32 stacks[MAX_TASKS][STACK_SIZE];
+uint_32 *stacks[MAX_TASKS];
 
 TCB* createKernelTask(void (*start)(), char *name, uint_8 priority) {
     lockScheduler();
@@ -77,26 +105,71 @@ TCB* createKernelTask(void (*start)(), char *name, uint_8 priority) {
 
     tasksIndex++;
 
-    stacks[tasksIndex][STACK_SIZE - 6] = (uint_32)&stacks[tasksIndex][STACK_SIZE - 2]; // EBP
-    stacks[tasksIndex][STACK_SIZE - 5] = 1; // EDI
-    stacks[tasksIndex][STACK_SIZE - 4] = 2; // ESI
-    stacks[tasksIndex][STACK_SIZE - 3] = 3; // EBX
-    stacks[tasksIndex][STACK_SIZE - 2] = (uint_32)kernelTaskStart;
-    stacks[tasksIndex][STACK_SIZE - 1] = (uint_32)kernelTaskExit;
-    stacks[tasksIndex][STACK_SIZE] = (uint_32)start;
+    stacks[tasksIndex] = (uint_32*)kcalloc(STACK_SIZE * sizeof(uint_32));
+
+    stacks[tasksIndex][STACK_SIZE - 8] = (uint_32)&stacks[tasksIndex][STACK_SIZE - 1]; // EBP
+    stacks[tasksIndex][STACK_SIZE - 7] = 1; // EDI
+    stacks[tasksIndex][STACK_SIZE - 6] = 2; // ESI
+    stacks[tasksIndex][STACK_SIZE - 5] = 3; // EBX
+    stacks[tasksIndex][STACK_SIZE - 4] = (uint_32)kernelTaskStart;
+    stacks[tasksIndex][STACK_SIZE - 3] = (uint_32)kernelTaskExit;
+    stacks[tasksIndex][STACK_SIZE - 2] = (uint_32)start;
 
     TCB *newTaskTcb = &tasksTcb[tasksIndex];
-    newTaskTcb->esp = &stacks[tasksIndex][STACK_SIZE - 6];
+    newTaskTcb->esp = &stacks[tasksIndex][STACK_SIZE - 8];
+    newTaskTcb->cr3 = (uint_32)getKernelPageDirectory();
     newTaskTcb->state = TaskState::Ready;
     newTaskTcb->name = name; // TODO: change with dynamic mem
     newTaskTcb->nextTask = nullptr;
     newTaskTcb->priority = priority;
+    newTaskTcb->user = false;
 
     unlockScheduler();
     return newTaskTcb;
 }
 
+extern "C" void hello_world();
 
+TCB* createUserTask() {
+    lockScheduler();
+
+    if (tasksIndex == (MAX_TASKS - 1)) return nullptr;
+
+    tasksIndex++;
+
+    PageDirectory *userPd = createUserPageDirectory();
+
+    uint_32 imageSpace = kallocPagePhysical(3); // 12 KiB for user program image
+    memcpy((void*)imageSpace, (void*)hello_world, 0x35);
+    
+    uint_32 *userStack = (uint_32*)(imageSpace + 0x2000);
+    uint_32 stackSize = 1024; // 4 byte slots. 1024 * 4 = 0x1000;
+    uint_32 *esp = (uint_32*)(0x7000 - 6*sizeof(uint_32));
+    stacks[tasksIndex] = (uint_32*)kcalloc(STACK_SIZE * sizeof(uint_32));
+    //uint_32 *esp = &stacks[tasksIndex][STACK_SIZE - 6];
+    userStack[stackSize-6] = (uint_32)(uint_32*)(0x7000 - 1*sizeof(uint_32)); // EBP
+    userStack[stackSize-5] = 1; // EDI
+    userStack[stackSize-4] = 2; // ESI
+    userStack[stackSize-3] = 3; // EBX
+    userStack[stackSize-2] = (uint_32)userTaskStart;
+
+    map(userPd, 0x4000, imageSpace, 3, true);
+
+    uint_32 cr3 = (uint_32)userPd;
+
+    TCB *userTask = &tasksTcb[tasksIndex];
+    userTask->esp = esp;
+    userTask->cr3 = cr3;
+    userTask->state = TaskState::Ready;
+    userTask->name = "User";
+    userTask->user = true;
+    userTask->nextTask = nullptr;
+    userTask->priority = 1;
+
+    unlockScheduler();
+
+    return userTask;
+}
 
 // index to the last task, NOT to first open spot
 uint_32 runningTaskIndex = 0;
@@ -113,6 +186,7 @@ void setBlockedState(Semaphore *toRelease) {
     currentTaskTcb->cpuTime += getMs(getTicksSinceBoot() - currentTaskTcb->lastStartTimeTick);
     currentTaskTcb->state = TaskState::Paused;
     if (toRelease != nullptr) toRelease->release();
+
     schedule();
 }
 

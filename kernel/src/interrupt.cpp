@@ -1,11 +1,11 @@
 #include <interrupt.h>
 #include <screen.h>
 
-extern void (*isrWrappers[IDT_ENTRIES_COUNT])(interrupt_frame*);
+extern void (*isrWrappers[IDT_ENTRIES_COUNT])(InterruptFrame*);
 
-void (*registeredIsrs[IDT_ENTRIES_COUNT])(interrupt_frame*);
+void (*registeredIsrs[IDT_ENTRIES_COUNT])(InterruptFrame*);
 
-void registerInterrupt(uint_8 interrupt, void (*isr)(interrupt_frame*), Gate type, uint_8 dpl) {
+void registerInterrupt(uint_8 interrupt, void (*isr)(InterruptFrame*), Gate type, uint_8 dpl) {
     registeredIsrs[interrupt] = isr;
 
     IDTEntry entry;
@@ -13,7 +13,7 @@ void registerInterrupt(uint_8 interrupt, void (*isr)(interrupt_frame*), Gate typ
     registerRawInterrupt(interrupt, isrWrappers[interrupt], type, dpl);
 } 
 
-void registerRawInterrupt(uint_8 interrupt, void (*isr)(interrupt_frame*), Gate type, uint_8 dpl) {
+void registerRawInterrupt(uint_8 interrupt, void (*isr)(InterruptFrame*), Gate type, uint_8 dpl) {
     IDTEntry entry;
     uint_32 isrAddr = (uint_32)isr;
 
@@ -32,7 +32,6 @@ uint_32 disableInterruptsCounter = 0;
 void enableInterrupts() {
     if (disableInterrupts > 0)
         disableInterruptsCounter--;
-    
     if (disableInterruptsCounter == 0) {
         __asm__ (
             "sti"

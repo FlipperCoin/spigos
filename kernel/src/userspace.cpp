@@ -1,6 +1,8 @@
 #include <userspace.h>
 #include <syscall.h>
+#include <syshandlers.h>
 
 void initUserspace() {
-    registerSyscall();
+    initSyscalls();
+    initSyscallHandlers();
 }

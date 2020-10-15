@@ -31,8 +31,8 @@ void print(char c) {
 
 void printHex(uint_32 value) {
     // length 11: 2 for "0x" + 8 for FFFFFFFF + 1 for null terminator
-    char buf[10];
-    itoh(value, buf, 10);
+    char buf[11];
+    itoh(value, buf, 11);
     print(buf);
 }
 

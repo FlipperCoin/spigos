@@ -1,6 +1,7 @@
 #include <dynmem.h>
 #include <virtmem.h>
 #include <sync.h>
+#include <memory.h>
 
 #define MAX_PAGE_GROUPS 1024
 
@@ -60,6 +61,13 @@ void * kmalloc(size_t size) {
     
     pageGroupsLock.release();
     return (void*)firstPage;
+}
+
+void * kcalloc(size_t size) {
+    void* ptr = kmalloc(size);
+    if (ptr == nullptr) return ptr;
+
+    return memset(ptr, 0, size);
 }
 
 void kfree(void *ptr) {

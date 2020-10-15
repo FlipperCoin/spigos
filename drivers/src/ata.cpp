@@ -110,7 +110,7 @@ void readSector() {
     readBufferIndex += 256;
 }
 
-void driveISR(interrupt_frame *frame) {
+void driveISR(InterruptFrame *frame) {
     uint_8 status = portByteIn(STATUS_REG);
 
     if (status & Status::BSY) return;

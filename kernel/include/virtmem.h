@@ -37,6 +37,21 @@ enum class PageTableEntryFlags {
     Global = 0x100 // if set, prevents the TLB from updating the address in its cache if CR3 is reset. Note, that the page global enable bit in CR4 must be set to enable this feature
 };
 
+#define PAGE_DIRECTORY_ENTRIES 1024
+#define PAGE_TABLE_ENTRIES 1024
+
+typedef struct PageDirectory {
+    uint_32 Entries[PAGE_DIRECTORY_ENTRIES];
+} PageDirectory;
+
 void enableVirtualMemory();
+
 uint_32 kallocPage(size_t npages);
 void kfreePages(uint_32 virtualAddress, size_t npages);
+
+uint_32 kallocPagePhysical(size_t npages);
+
+void map(PageDirectory *pageDirectory, uint_32 virtualAddress, uint_32 physicalAddress, uint_32 npages = 1, bool user = false);
+
+PageDirectory *getKernelPageDirectory();
+PageDirectory *createUserPageDirectory();

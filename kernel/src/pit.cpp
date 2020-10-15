@@ -35,7 +35,7 @@ uint_32 getMs(uint_32 ticks) {
     return (ticks / frequency) * 1000;
 }
 
-void timerISR(interrupt_frame *frame) {
+void timerISR(InterruptFrame *frame) {
     totalTicks++;
     
     timeUpdate(getMsSinceBoot());

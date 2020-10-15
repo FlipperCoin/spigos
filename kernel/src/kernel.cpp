@@ -36,13 +36,19 @@ void enterUserspace() {
      push $1f; \
      iret; \
    1: \
+     mov $1, %eax; \
+     mov $2, %ebx; \
+     mov $3, %ecx; \
+     mov $4, %edx; \
+     int $0x80; \
      ");
-
-     while (true)
-     {
-         
-     }
      
+    print("Hello, User Space!");
+    while (true)
+    {
+      
+    }
+      
 }
 
 extern "C" int KernelMain() {
@@ -77,14 +83,17 @@ extern "C" int KernelMain() {
     println("Enabling Hardware IRQs...");
     enableHardwareInterrupts();
 
+    println("Initializing User Space...");
+    initUserspace();
+
+    createUserTask();
+
     println();
     println("Done.");
     println();
 
-    enterUserspace();
-
     // === 
-
+    
     shell();
 
     // ===

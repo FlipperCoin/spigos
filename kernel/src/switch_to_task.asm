@@ -6,6 +6,7 @@ EXTERN currentTaskTcb
 struc TCB 
 
   .esp:     resd   1 
+  .cr3:     resd   1
 
 endstruc
 
@@ -24,6 +25,8 @@ switch_to_task:
     mov [currentTaskTcb], esi   ; set next task as current task
     
     mov esp, [esi + TCB.esp]    ; change ESP and pop state
+    mov ebx, [esi + TCB.cr3]
+    mov cr3, ebx
     pop ebp
     pop edi
     pop esi
