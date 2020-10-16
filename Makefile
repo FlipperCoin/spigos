@@ -1,6 +1,8 @@
 OUT ?= out
 boot_img = bootloader/out/bin/bootable.img
-foreign_targets := kernel/out/bin/kernel.bin
+programs_bin = programs/out/bin/programs.bin
+kernel_bin = kernel/out/bin/kernel.bin 
+foreign_targets := $(kernel_bin) $(programs_bin)
 foreign_targets_dirs := $(basename $(foreign_targets))
 get_root_dir = $(firstword $(subst /, ,$(dir)))
 submakes := $(foreach dir,$(foreign_targets_dirs),$(get_root_dir))
@@ -17,11 +19,14 @@ clean:
 $(OUT):
 	mkdir -p $@/bin
 
-$(OUT)/spigos_img: $(boot_img) | $(OUT)
+$(OUT)/spigos_img: $(boot_img) out/bin/filler.bin $(programs_bin) | $(OUT)
 	cat $^ > $@
 
-bootloader/out/bin/bootable.img: kernel/out/bin/kernel.bin
-	$(MAKE) -C $(firstword $(subst /, ,$@)) KERNEL_BIN=../kernel/out/bin/kernel.bin
+$(OUT)/bin/filler.bin: $(boot_img)
+	./filler.sh $@ 512000 $(boot_img)
+
+bootloader/out/bin/bootable.img: $(kernel_bin)
+	$(MAKE) -C $(firstword $(subst /, ,$@)) KERNEL_BIN=../$(kernel_bin)
 
 $(foreign_targets): $(submakes)
 	

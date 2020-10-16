@@ -13,6 +13,7 @@
 #include <exceptions.h>
 #include <dynmem.h>
 #include <gdt.h>
+#include <filesystem.h>
 #include <userspace.h>
 
 extern "C" int KernelMain() {
@@ -47,14 +48,20 @@ extern "C" int KernelMain() {
     println("Enabling Hardware IRQs...");
     enableHardwareInterrupts();
 
+    println("Loading Files from Filesystem...");
+    loadFiles();
+
     println("Initializing User Space...");
     initUserspace();
-
-    createUserTask();
 
     println();
     println("Done.");
     println();
+
+    File *prog0 = getFile(0);
+    File *prog1 = getFile(1);
+    createUserTask(prog0->Data, prog0->Size);
+    createUserTask(prog1->Data, prog1->Size);
 
     // === 
     

@@ -129,9 +129,7 @@ TCB* createKernelTask(void (*start)(), char *name, uint_8 priority) {
     return newTaskTcb;
 }
 
-extern "C" void hello_world();
-
-TCB* createUserTask() {
+TCB* createUserTask(void *start, size_t size) {
     lockScheduler();
 
     if (tasksIndex == (MAX_TASKS - 1)) return nullptr;
@@ -141,13 +139,12 @@ TCB* createUserTask() {
     PageDirectory *userPd = createUserPageDirectory();
 
     uint_32 imageSpace = kallocPagePhysical(3); // 12 KiB for user program image
-    memcpy((void*)imageSpace, (void*)hello_world, 0x35);
+    memcpy((void*)imageSpace, start, size);
     
     uint_32 *userStack = (uint_32*)(imageSpace + 0x2000);
     uint_32 stackSize = 1024; // 4 byte slots. 1024 * 4 = 0x1000;
     uint_32 *esp = (uint_32*)(0x7000 - 6*sizeof(uint_32));
-    stacks[tasksIndex] = (uint_32*)kcalloc(STACK_SIZE * sizeof(uint_32));
-    //uint_32 *esp = &stacks[tasksIndex][STACK_SIZE - 6];
+
     userStack[stackSize-6] = (uint_32)(uint_32*)(0x7000 - 1*sizeof(uint_32)); // EBP
     userStack[stackSize-5] = 1; // EDI
     userStack[stackSize-4] = 2; // ESI

@@ -10,7 +10,7 @@
 
 void initializeMultitasking();
 TCB* createKernelTask(void (*start)(), char *name = "", uint_8 priority = 1);
-TCB* createUserTask();
+TCB* createUserTask(void *start, size_t size);
 
 void lockScheduler();
 void unlockScheduler();
