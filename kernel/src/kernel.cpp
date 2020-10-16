@@ -58,11 +58,6 @@ extern "C" int KernelMain() {
     println("Done.");
     println();
 
-    File *prog0 = getFile(0);
-    File *prog1 = getFile(1);
-    createUserTask(prog0->Data, prog0->Size);
-    createUserTask(prog1->Data, prog1->Size);
-
     // === 
     
     shell();
